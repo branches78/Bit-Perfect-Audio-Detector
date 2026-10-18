@@ -22,6 +22,12 @@ Users can send their results to the public table of phones on the
    The APK is written to `app/build/outputs/apk/debug/`.
 3. Unit tests (policy reader, app scanner and report email): `./gradlew test`.
 
+### Release build
+
+Release builds are shrunk with R8 and signed with the keystore set in `keystore.properties` (ignored
+by git; see `keystore.properties.example`). Without that file they come out unsigned.
+`./gradlew assembleRelease` writes the APK to `app/build/outputs/apk/release/`.
+
 ## How support is detected
 
 | Situation | Source | Reliability |
