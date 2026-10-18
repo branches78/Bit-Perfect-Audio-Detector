@@ -36,6 +36,7 @@
     <string name="report_sending">Envoi du rapport… cela peut prendre jusqu\'à une minute.</string>
     <string name="report_sent">Rapport envoyé. Merci !</string>
     <string name="report_rate_limited">Vous pouvez envoyer un rapport toutes les 48 heures et vous en avez déjà envoyé un récemment. Merci !</string>
+    <string name="report_rate_limited_network">Un rapport a déjà été envoyé récemment depuis votre réseau. Veuillez réessayer plus tard. Merci !</string>
     <string name="report_failed">Impossible d\'envoyer le rapport. Vérifiez votre connexion Internet et réessayez.</string>
     <string name="report_busy">Trop de rapports ont été reçus aujourd\'hui. Veuillez réessayer demain. Merci !</string>
     <string name="help_bp_title">Qu\'est-ce que le bit-perfect ?</string>

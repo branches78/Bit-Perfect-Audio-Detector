@@ -525,7 +525,7 @@ object ReportText {
             c.getString(R.string.field_res_no_dac) to noDac,
             c.getString(R.string.field_res_dac) to
                 (dac?.takeIf { it.maxSampleRate > 0 }?.let { res(it.maxSampleRate, it.maxBitDepth) } ?: none),
-            c.getString(R.string.card_usb_dac) to (dac?.productName?.ifBlank { null } ?: none),
+            c.getString(R.string.card_usb_dac) to (dac?.displayName?.ifBlank { null } ?: none),
             c.getString(R.string.card_bp_apps) to r.installedApps.joinToString { it.name }.ifBlank { none },
         )
     }
@@ -558,7 +558,9 @@ object ReportText {
         appendLine(c.getString(R.string.tech_outputs))
         rt.devices.forEach { d ->
             append("· ${AudioRuntimeProbe.typeName(c, d.type)}")
-            if (d.productName.isNotBlank()) append(" \"${d.productName}\"")
+            // Only USB devices (DACs) are named: Bluetooth devices often carry a name the user gave
+            // them ("John's AirPods"), and the report must stay anonymous.
+            if (d.isUsb && d.productName.isNotBlank()) append(" \"${d.productName}\"")
             if (d.maxSampleRate > 0) append(" · ${VerdictEngine.khz(c, d.maxSampleRate)}/${d.maxBitDepth}b")
             if (d.isUsb) {
                 append(" · " + c.getString(R.string.tech_mixer_attrs, d.mixerAttributesCount))

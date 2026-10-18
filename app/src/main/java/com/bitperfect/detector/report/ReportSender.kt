@@ -19,8 +19,8 @@ import java.util.Locale
 enum class SendResult { SENT, RATE_LIMITED, BUSY, FAILED }
 
 /**
- * Sends the report to the report server (BitPerfectDetector-Server), which forwards it to the developer by
- * email. The app never talks to Resend: its key only lives on the server.
+ * Sends the anonymous report to the report server (github.com/branches78/Bit-Perfect-Detector-Server),
+ * which forwards it to the developer by email. The app never talks to Resend: its key only lives on the server.
  */
 object ReportSender {
 

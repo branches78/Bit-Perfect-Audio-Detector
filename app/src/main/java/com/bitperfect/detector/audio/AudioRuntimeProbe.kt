@@ -154,7 +154,17 @@ data class OutputDevice(
     val bitPerfectMaxRate: Int,
     val bitPerfectMaxBits: Int,
     val preferred: PreferredMixer?,
-)
+) {
+    /** The name shown to the user: without the "USB-Audio - " prefix of some phones. */
+    val displayName get() = cleanDacName(productName)
+}
+
+/**
+ * DAC name without the "USB-Audio - " prefix some (Qualcomm) phones add to the product name
+ * ("USB-Audio - Cayin RU7" → "Cayin RU7"). Same as cleanDacName in the report server and the website.
+ */
+fun cleanDacName(name: String): String =
+    name.replace(Regex("^USB[- ]?Audio\\s*-\\s*", RegexOption.IGNORE_CASE), "").trim().ifEmpty { name }
 
 /** Mixer attributes an app chose for a device (AudioManager.getPreferredMixerAttributes). */
 data class PreferredMixer(val behavior: Int, val sampleRate: Int, val bits: Int)

@@ -139,7 +139,8 @@ class MainActivity : ComponentActivity() {
             if (result == SendResult.SENT) prefs.edit().putLong(KEY_LAST_SENT, System.currentTimeMillis()).apply()
             val message = when (result) {
                 SendResult.SENT -> R.string.report_sent
-                SendResult.RATE_LIMITED -> R.string.report_rate_limited
+                // This phone passed its own 48-hour check, so another report came from the same IP.
+                SendResult.RATE_LIMITED -> R.string.report_rate_limited_network
                 SendResult.BUSY -> R.string.report_busy
                 SendResult.FAILED -> R.string.report_failed
             }

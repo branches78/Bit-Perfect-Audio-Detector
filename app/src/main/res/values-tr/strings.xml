@@ -35,6 +35,7 @@
     <string name="report_sending">Rapor gönderiliyor… bu işlem bir dakika kadar sürebilir.</string>
     <string name="report_sent">Rapor gönderildi. Teşekkürler!</string>
     <string name="report_rate_limited">48 saatte bir rapor gönderebilirsiniz ve kısa süre önce zaten bir rapor gönderdiniz. Teşekkürler!</string>
+    <string name="report_rate_limited_network">Kısa süre önce ağınızdan zaten bir rapor gönderildi. Lütfen daha sonra tekrar deneyin. Teşekkürler!</string>
     <string name="report_failed">Rapor gönderilemedi. İnternet bağlantınızı kontrol edip tekrar deneyin.</string>
     <string name="report_busy">Bugün çok fazla rapor alındı. Lütfen yarın tekrar deneyin. Teşekkürler!</string>
     <string name="help_bp_title">Bit-perfect nedir?</string>

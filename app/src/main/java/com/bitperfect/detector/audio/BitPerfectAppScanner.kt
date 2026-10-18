@@ -22,6 +22,8 @@ class BitPerfectAppScanner(private val context: Context) {
     private val pm = context.packageManager
 
     fun scan(): List<BitPerfectApp> = musicApps()
+        // Apps the user disabled in Settings don't count (they can't play anything).
+        .filter { it.enabled }
         .filter { it.packageName != context.packageName && it.packageName !in EXCLUDED_PACKAGES }
         .filter { usesBitPerfectApi(it) }
         .map { BitPerfectApp(pm.getApplicationLabel(it).toString(), it.packageName) }

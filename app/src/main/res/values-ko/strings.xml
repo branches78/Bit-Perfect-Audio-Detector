@@ -34,6 +34,7 @@
     <string name="report_sending">보고서를 보내는 중입니다… 최대 1분 정도 걸릴 수 있습니다.</string>
     <string name="report_sent">보고서를 보냈습니다. 감사합니다!</string>
     <string name="report_rate_limited">보고서는 48시간에 한 번 보낼 수 있으며, 최근에 이미 보냈습니다. 감사합니다!</string>
+    <string name="report_rate_limited_network">최근 사용 중인 네트워크에서 이미 보고서가 전송되었습니다. 나중에 다시 시도해 주세요. 감사합니다!</string>
     <string name="report_failed">보고서를 보낼 수 없습니다. 인터넷 연결을 확인하고 다시 시도하세요.</string>
     <string name="report_busy">오늘은 너무 많은 보고서가 접수되었습니다. 내일 다시 시도해 주세요. 감사합니다!</string>
     <string name="help_bp_title">bit-perfect란?</string>

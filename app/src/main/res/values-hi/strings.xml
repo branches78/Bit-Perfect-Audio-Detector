@@ -35,6 +35,7 @@
     <string name="report_sending">रिपोर्ट भेजी जा रही है… इसमें एक मिनट तक लग सकता है।</string>
     <string name="report_sent">रिपोर्ट भेज दी गई। धन्यवाद!</string>
     <string name="report_rate_limited">हर 48 घंटे में एक रिपोर्ट भेजी जा सकती है, और आप हाल ही में एक भेज चुके हैं। धन्यवाद!</string>
+    <string name="report_rate_limited_network">हाल ही में आपके नेटवर्क से पहले ही एक रिपोर्ट भेजी जा चुकी है। कृपया बाद में फिर से कोशिश करें। धन्यवाद!</string>
     <string name="report_failed">रिपोर्ट नहीं भेजी जा सकी। अपना इंटरनेट कनेक्शन जाँचें और फिर से कोशिश करें।</string>
     <string name="report_busy">आज बहुत अधिक रिपोर्ट मिल चुकी हैं। कृपया कल फिर से कोशिश करें। धन्यवाद!</string>
     <string name="help_bp_title">bit-perfect क्या है?</string>

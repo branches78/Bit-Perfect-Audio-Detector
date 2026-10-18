@@ -107,7 +107,7 @@ object VerdictEngine {
         if (dacs.isEmpty()) {
             return Verdict(Level.NO, c.getString(R.string.h_not_connected), "")
         }
-        val names = dacs.map { it.productName }.filter { it.isNotBlank() }.joinToString()
+        val names = dacs.map { it.displayName }.filter { it.isNotBlank() }.joinToString()
         val headline = if (names.isNotEmpty()) {
             c.getString(R.string.h_connected_dac, names)
         } else {
