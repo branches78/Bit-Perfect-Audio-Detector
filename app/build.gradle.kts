@@ -16,14 +16,14 @@ val keystoreProperties = Properties().apply {
 
 android {
     namespace = "com.bitperfect.detector"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.bitperfect.detector"
         // Bit-perfect (AudioMixerAttributes) exists since Android 14 (API 34).
         // With minSdk 34 the app can't be installed on earlier versions.
         minSdk = 34
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0.0"
 
