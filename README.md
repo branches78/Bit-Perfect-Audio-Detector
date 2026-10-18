@@ -38,7 +38,7 @@ Users can send their results to the public table of phones on the
 [Bit-Perfect Detector website](https://bit-perfect-detector-web.onrender.com).
 
 - `minSdk 34`: installs only on Android 14 or later (bit-perfect mode was added in Android 14).
-- No permissions and no internet access: the report is sent by the user from their own email app.
+- Only the `INTERNET` permission, used just to send the anonymous report when the user taps "Send".
   The manifest declares `<queries>` to see installed audio players (it doesn't use
   `QUERY_ALL_PACKAGES`).
 - Available in 10 languages: English, Spanish, German, French, Italian, Portuguese, Turkish,
@@ -49,7 +49,7 @@ Users can send their results to the public table of phones on the
 1. Open the project in Android Studio (Ladybug or later) and let Gradle sync.
 2. Run the `app` configuration on a phone with Android 14+, or run `./gradlew assembleDebug`.
    The APK is written to `app/build/outputs/apk/debug/`.
-3. Unit tests (policy reader, app scanner and report email): `./gradlew test`.
+3. Unit tests (policy reader and app scanner): `./gradlew test`.
 
 #### Release build
 
@@ -108,25 +108,26 @@ Limitations:
 
 ### Reports and website
 
-The "Send report" button shows what will be sent and then opens the user's email app with a message
-to the developer (`report/ReportEmail.kt`), which the user sends themselves.
-The app has no server and no internet access. The message repeats what the send dialog shows, in
-the app's language: a greeting, a request not to edit the text, the data that will be published, the
-model code and the entry ready to paste into the website's table (JSON, the same in every language).
-The technical details stay in English, and the subject is always "Bit-Perfect Detector Report".
-The maintainer reviews each report and publishes it by adding that entry to the website's phone table.
-The website itself isn't part of this repository.
+The "Send report" button shows what will be sent and, when the user taps "Send", posts the report
+(`report/ReportSender.kt`) to the
+[report server](https://github.com/branches78/Bit-Perfect-Detector-Server), a small open-source
+Node.js server that forwards it to the maintainer by email and **stores nothing**. The maintainer
+reviews each report and adds the phone to the website's table. The website itself isn't part of this
+repository.
 
-The website's URL is set in `WEBSITE_URL` (`app/build.gradle.kts`) and the report address in
-`ReportEmail.ADDRESS`. If you fork the project, point them to your own.
+The app allows one report every 48 hours, and the server enforces the same limit per IP address
+(it keeps only a keyed hash of the IP in memory, never the IP itself).
+
+The URLs are set in `REPORT_SERVER_URL` and `WEBSITE_URL` (`app/build.gradle.kts`). If you fork the
+project, deploy your own server and point those settings to it.
 
 #### What a report contains
 
 Phone manufacturer and model, Android version, the detected audio capabilities (with and without
 a DAC, and the DAC's name if one is connected), the names of compatible installed apps, and the
 technical details shown in the app. Only the first ones are published; the technical details are
-only seen by the maintainer. Since the report is an email, the maintainer also receives the sender's
-email address, which is never published.
+only seen by the maintainer. **Reports are anonymous:** they don't include names, email addresses,
+accounts or any other data that identifies the sender.
 
 ### Project structure
 
@@ -137,7 +138,7 @@ app/src/main/java/com/bitperfect/detector/
   audio/AudioRuntimeProbe.kt       Android 14 APIs (with a DAC)
   audio/BitPerfectAppScanner.kt    Installed music apps that use native bit-perfect
   audio/Verdicts.kt                Combines both sources into the on-screen results
-  report/ReportEmail.kt            Builds the report email and opens the email app
+  report/ReportSender.kt           Sends the anonymous report to the report server
   ui/MainScreen.kt                 Compose UI and report text
 ```
 

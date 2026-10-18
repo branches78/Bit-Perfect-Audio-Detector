@@ -21,7 +21,8 @@ import com.bitperfect.detector.audio.PolicyConfigScanner
 import com.bitperfect.detector.audio.PolicyScanResult
 import com.bitperfect.detector.audio.Report
 import com.bitperfect.detector.audio.VerdictEngine
-import com.bitperfect.detector.report.ReportEmail
+import com.bitperfect.detector.report.ReportSender
+import com.bitperfect.detector.report.SendResult
 import com.bitperfect.detector.ui.MainScreen
 import com.bitperfect.detector.ui.theme.BitPerfectTheme
 import kotlinx.coroutines.Dispatchers
@@ -36,6 +37,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var probe: AudioRuntimeProbe
 
     private var report by mutableStateOf<Report?>(null)
+    private var sending by mutableStateOf(false)
 
     /** A full scan (policy and apps) is running or queued; "Analyze again" waits for it. */
     private var scanning by mutableStateOf(false)
@@ -71,7 +73,10 @@ class MainActivity : ComponentActivity() {
                     report = report,
                     onRefresh = { refresh(rescanPolicy = true) },
                     scanning = scanning,
+                    sending = sending,
                     onSend = ::sendReport,
+                    // While the user reads the send dialog, the report server wakes up.
+                    onOpenReport = { lifecycleScope.launch { ReportSender.wakeUpServer() } },
                 )
             }
         }
@@ -117,11 +122,34 @@ class MainActivity : ComponentActivity() {
         report = VerdictEngine.build(this@MainActivity, runtime, scanned, apps)
     }
 
-    /** Opens the user's email app with the report ready to send to the developer. */
     private fun sendReport() {
         val r = report ?: return
-        if (!ReportEmail.open(this, r)) {
-            Toast.makeText(this, R.string.no_email_app, Toast.LENGTH_LONG).show()
+        if (sending) return
+        // One report every 48 hours; the server has the same per-IP limit as a backup.
+        val prefs = getSharedPreferences("reports", MODE_PRIVATE)
+        val lastSent = prefs.getLong(KEY_LAST_SENT, 0L)
+        if (System.currentTimeMillis() - lastSent < REPORT_INTERVAL_MS) {
+            Toast.makeText(this, R.string.report_rate_limited, Toast.LENGTH_LONG).show()
+            return
         }
+        sending = true
+        Toast.makeText(this, R.string.report_sending, Toast.LENGTH_LONG).show()
+        lifecycleScope.launch {
+            val result = ReportSender.send(this@MainActivity, r)
+            if (result == SendResult.SENT) prefs.edit().putLong(KEY_LAST_SENT, System.currentTimeMillis()).apply()
+            val message = when (result) {
+                SendResult.SENT -> R.string.report_sent
+                SendResult.RATE_LIMITED -> R.string.report_rate_limited
+                SendResult.BUSY -> R.string.report_busy
+                SendResult.FAILED -> R.string.report_failed
+            }
+            sending = false
+            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private companion object {
+        const val KEY_LAST_SENT = "last_sent_at"
+        const val REPORT_INTERVAL_MS = 48 * 3600_000L
     }
 }

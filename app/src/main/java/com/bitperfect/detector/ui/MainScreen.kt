@@ -89,7 +89,9 @@ fun MainScreen(
     report: Report?,
     onRefresh: () -> Unit,
     scanning: Boolean,
+    sending: Boolean,
     onSend: () -> Unit,
+    onOpenReport: () -> Unit,
 ) {
     var showDetails by rememberSaveable { mutableStateOf(false) }
     var showHelp by rememberSaveable { mutableStateOf(false) }
@@ -144,7 +146,7 @@ fun MainScreen(
             }
             // Any phone can send its report: the website's table also lists phones without support.
             item {
-                ContributeCard(onSend = { showDetails = true })
+                ContributeCard(sending = sending, onSend = { onOpenReport(); showDetails = true })
             }
         }
     }
@@ -152,7 +154,7 @@ fun MainScreen(
 
 /** Invitation to send the report, with a link to the website (where the phone database is). */
 @Composable
-private fun ContributeCard(onSend: () -> Unit) {
+private fun ContributeCard(sending: Boolean, onSend: () -> Unit) {
     val context = LocalContext.current
     val site = BuildConfig.WEBSITE_URL
     ExpandableCard(
@@ -178,7 +180,7 @@ private fun ContributeCard(onSend: () -> Unit) {
             style = MaterialTheme.typography.bodyMedium,
         )
         Box(Modifier.fillMaxWidth().padding(top = 8.dp), contentAlignment = Alignment.Center) {
-            Button(onClick = onSend) {
+            Button(onClick = onSend, enabled = !sending) {
                 Text(stringResource(R.string.action_send_report))
             }
         }
@@ -479,21 +481,17 @@ private fun TechnicalDetailsDialog(report: Report, onSend: () -> Unit, onDismiss
                     style = MaterialTheme.typography.bodySmall,
                     fontFamily = FontFamily.Monospace,
                 )
-                Text(
-                    stringResource(R.string.report_privacy),
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(top = 16.dp),
-                )
-                Text(
-                    stringResource(R.string.privacy_policy),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.primary,
-                    textDecoration = TextDecoration.Underline,
-                    modifier = Modifier
-                        .padding(top = 4.dp)
-                        .clickable { openUrl(context, "${BuildConfig.WEBSITE_URL}/privacy") }
-                        .padding(vertical = 4.dp),
-                )
+                Box(Modifier.fillMaxWidth().padding(top = 12.dp), contentAlignment = Alignment.Center) {
+                    Text(
+                        stringResource(R.string.privacy_policy),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        textDecoration = TextDecoration.Underline,
+                        modifier = Modifier
+                            .clickable { openUrl(context, "${BuildConfig.WEBSITE_URL}/privacy") }
+                            .padding(vertical = 4.dp),
+                    )
+                }
             }
         },
         confirmButton = {
