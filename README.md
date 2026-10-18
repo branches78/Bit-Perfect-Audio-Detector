@@ -1,5 +1,34 @@
 # Bit-Perfect Detector
 
+## What is bit-perfect?
+
+Bit-perfect means the audio reaches the DAC exactly as it is in the file, bit for bit. Normally
+Android sends all sound through its mixer, which can change the sample rate (for example, to
+48 kHz), adjust the volume digitally and mix it with other system sounds. In bit-perfect mode the
+mixer is bypassed and the DAC receives the original data, at its own sample rate and bit depth.
+
+## Bit-perfect on Android
+
+Android added [official support](https://source.android.com/docs/core/audio/preferred-mixer-attr)
+in Android 14, with the AudioMixerAttributes API and the MIXER_BEHAVIOR_BIT_PERFECT mode, only for
+USB DACs. However, having Android 14 is not enough: the manufacturer must enable it in the phone's
+audio configuration, and the music app must request it. Before Android 14, only some apps achieved
+it by using their own proprietary USB driver (e.g. USB Audio Player Pro, FiiO Music, HiBy Music,
+among others).
+
+## Why is it useful?
+
+It helps audiophiles to identify which phones have native bit-perfect support before purchase.
+
+## How to make the test?
+
+Download the Bit-Perfect Detector app from the [Releases](https://github.com/branches78/Bit-Perfect-Detector/releases)
+page of this repository and install it on your phone (Android 14 or later). Open it to see the
+results; for a definitive result, connect your USB DAC. Then you can tap "Send report" to add your
+phone to the [public table of phones](https://bit-perfect-detector-web.onrender.com).
+
+## Technical features
+
 Native Android app (Kotlin + Jetpack Compose) that tells you whether a phone supports Hi-Res
 audio (192 kHz / 24 bits) and Android's bit-perfect mode (`AUDIO_OUTPUT_FLAG_BIT_PERFECT`),
 whether a USB DAC is connected, and which installed music apps use Android's native bit-perfect
@@ -15,20 +44,20 @@ Users can send their results to the public table of phones on the
 - Available in 10 languages: English, Spanish, German, French, Italian, Portuguese, Turkish,
   Japanese, Korean and Hindi.
 
-## Building
+### Building
 
 1. Open the project in Android Studio (Ladybug or later) and let Gradle sync.
 2. Run the `app` configuration on a phone with Android 14+, or run `./gradlew assembleDebug`.
    The APK is written to `app/build/outputs/apk/debug/`.
 3. Unit tests (policy reader, app scanner and report email): `./gradlew test`.
 
-### Release build
+#### Release build
 
 Release builds are shrunk with R8 and signed with the keystore set in `keystore.properties` (ignored
 by git; see `keystore.properties.example`). Without that file they come out unsigned.
 `./gradlew assembleRelease` writes the APK to `app/build/outputs/apk/release/`.
 
-## How support is detected
+### How support is detected
 
 | Situation | Source | Reliability |
 |---|---|---|
@@ -36,7 +65,7 @@ by git; see `keystore.properties.example`). Without that file they come out unsi
 | No DAC | Reads `audio_policy_configuration.xml` (and its `xi:include`s, e.g. `usb_audio_policy_configuration.xml`) from `/odm/etc`, `/vendor/etc/audio`, `/vendor/etc` and `/system/etc`, and looks for a `mixPort` with `AUDIO_OUTPUT_FLAG_BIT_PERFECT` routed to `AUDIO_DEVICE_OUT_USB_DEVICE` | High, "according to the manufacturer" |
 | No DAC, Hi-Res | Output `mixPort`s with profiles >= 192 kHz and >= 24 bits, dynamic USB output, `getDirectPlaybackSupport(192k/24)` and the profiles of connected outputs | High / medium |
 
-### Main limitation
+#### Main limitation
 
 Android has no public API that reports bit-perfect support without a connected DAC:
 `getSupportedMixerAttributes()` requires an `AudioDeviceInfo`, and Android only provides
@@ -51,7 +80,7 @@ Cases where reading without a DAC may fail:
 
 With a DAC connected, the result comes from Android and is definitive.
 
-## "Compatible apps" card
+### "Compatible apps" card
 
 Always shown, with or without a DAC. It lists the installed music apps that use Android 14's
 native bit-perfect mode and, below them, other compatible apps available on the Play Store
@@ -77,7 +106,7 @@ Limitations:
   setting or come from an unused library).
 - An app that calls the API through reflection isn't detected.
 
-## Reports and website
+### Reports and website
 
 The "Send report" button shows what will be sent and then opens the user's email app with a message
 to `bit-perfect-detector@outlook.com` (`report/ReportEmail.kt`), which the user sends themselves.
@@ -91,7 +120,7 @@ The website itself isn't part of this repository.
 The website's URL is set in `WEBSITE_URL` (`app/build.gradle.kts`) and the report address in
 `ReportEmail.ADDRESS`. If you fork the project, point them to your own.
 
-### What a report contains
+#### What a report contains
 
 Phone manufacturer and model, Android version, the detected audio capabilities (with and without
 a DAC, and the DAC's name if one is connected), the names of compatible installed apps, and the
@@ -99,7 +128,7 @@ technical details shown in the app. Only the first ones are published; the techn
 only seen by the maintainer. Since the report is an email, the maintainer also receives the sender's
 email address, which is never published.
 
-## Project structure
+### Project structure
 
 ```
 app/src/main/java/com/bitperfect/detector/
