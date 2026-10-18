@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- USB isn't used directly: the app only reads what AudioManager exposes. -->
+    <uses-feature android:name="android.hardware.usb.host" android:required="false" />
+
+    <!-- Music apps checked by BitPerfectAppScanner; without this, Android 11+ hides them. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="content" android:mimeType="audio/*" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="file" android:mimeType="audio/*" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.APP_MUSIC" />
+        </intent>
+        <intent>
+            <action android:name="android.media.browse.MediaBrowserService" />
+        </intent>
+        <intent>
+            <action android:name="androidx.media3.session.MediaSessionService" />
+        </intent>
+        <intent>
+            <action android:name="androidx.media3.session.MediaLibraryService" />
+        </intent>
+        <!-- Known compatible apps (BitPerfectAppScanner.SUGGESTED_APPS), always checked by name. -->
+        <package android:name="app.symfonik.music.player" />
+        <package android:name="com.frack.hifiradio" />
+        <package android:name="tv.plex.labs.plexamp" />
+        <package android:name="com.nostalgicpod.app" />
+        <package android:name="com.androidexpert35.audiophilemusicplayer" />
+        <package android:name="app.purebit" />
+        <package android:name="com.rhmsoft.omnia" />
+    </queries>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BitPerfectDetector">
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|uiMode"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

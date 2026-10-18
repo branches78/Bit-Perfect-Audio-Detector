@@ -1,0 +1,14 @@
+# Gradle and Android Studio
+.gradle/
+.kotlin/
+build/
+local.properties
+.idea/
+*.iml
+
+# Built APKs and signing keys (never commit a keystore or its passwords)
+*.apk
+*.aab
+*.jks
+*.keystore
+keystore.properties
