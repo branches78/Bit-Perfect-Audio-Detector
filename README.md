@@ -109,7 +109,7 @@ Limitations:
 ### Reports and website
 
 The "Send report" button shows what will be sent and then opens the user's email app with a message
-to `bit-perfect-detector@outlook.com` (`report/ReportEmail.kt`), which the user sends themselves.
+to the developer (`report/ReportEmail.kt`), which the user sends themselves.
 The app has no server and no internet access. The message repeats what the send dialog shows, in
 the app's language: a greeting, a request not to edit the text, the data that will be published, the
 model code and the entry ready to paste into the website's table (JSON, the same in every language).
