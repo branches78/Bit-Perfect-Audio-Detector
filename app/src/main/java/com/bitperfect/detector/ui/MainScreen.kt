@@ -109,7 +109,7 @@ fun MainScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Bit-Perfect Detector") },
+                title = { Text("Bit-Perfect Audio Detector") },
                 actions = {
                     IconButton(onClick = { showHelp = true }, enabled = report != null) {
                         Icon(
