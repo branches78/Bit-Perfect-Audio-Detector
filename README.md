@@ -22,7 +22,7 @@ It helps audiophiles to identify which phones have native bit-perfect support be
 
 ## How to make the test?
 
-Download the Bit-Perfect Audio Detector app from the [Releases](https://github.com/branches78/Bit-Perfect-Detector/releases)
+Download the Bit-Perfect Audio Detector app from the [Releases](https://github.com/branches78/Bit-Perfect-Audio-Detector/releases)
 page of this repository and install it on your phone (Android 14 or later). Open it to see the
 results; for a definitive result, connect your USB DAC. Then you can tap "Send report" to add your
 phone to the [public table of phones](https://bit-perfect-detector-web.onrender.com).
@@ -110,7 +110,7 @@ Limitations:
 
 The "Send report" button shows what will be sent and, when the user taps "Send", posts the report
 (`report/ReportSender.kt`) to the
-[report server](https://github.com/branches78/Bit-Perfect-Detector-Server), a small open-source
+[report server](https://github.com/branches78/Bit-Perfect-Audio-Detector-Server), a small open-source
 Node.js server that forwards it to the maintainer by email and **stores nothing**. The maintainer
 reviews each report and adds the phone to the website's table. The website itself isn't part of this
 repository.
