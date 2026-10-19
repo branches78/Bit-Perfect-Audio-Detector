@@ -1,5 +1,3 @@
-# Bit-Perfect Audio Detector
-
 <img width="1024" height="500" alt="feature-graphic-en" src="https://github.com/user-attachments/assets/f5dddb32-a296-4f57-a807-f83874a57091" />
 
 ## What is bit-perfect?
