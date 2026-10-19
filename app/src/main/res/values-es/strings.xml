@@ -116,4 +116,19 @@
     <string name="note_include_not_found">Include no encontrado: %1$s</string>
     <string name="yes">sí</string>
     <string name="no">no</string>
+    <!-- "Ask the manufacturer" card and the draft for the manufacturer's forum (ForumDraft) -->
+    <string name="card_ask_manufacturer">Pídeselo al fabricante</string>
+    <string name="ask_manufacturer_title">Solicita soporte bit-perfect</string>
+    <string name="ask_manufacturer_text">Solo %1$s puede habilitar el bit-perfect nativo en este teléfono. Copia este texto, abre el foro y publícalo como un tema nuevo: mientras más personas lo pidan, más probable es que llegue en una actualización.</string>
+    <string name="ask_manufacturer_english">El texto está en inglés porque el foro de este fabricante no está en tu idioma.</string>
+    <string name="action_copy_text">Copiar texto</string>
+    <string name="action_open_forum">Abrir foro</string>
+    <string name="forum_draft_title">Solicitud de función: audio USB bit-perfect nativo en el %1$s</string>
+    <string name="forum_draft_intro">Desde Android 14, Android soporta la reproducción bit-perfect a través de DAC USB (https://source.android.com/docs/core/audio/preferred-mixer-attr): con AudioMixerAttributes y MIXER_BEHAVIOR_BIT_PERFECT, el mezclador del sistema se salta y el DAC recibe el audio original con su propia frecuencia de muestreo y profundidad de bits. Apps de música como Symfonium, Hi-Res Radio, PureBit y Plexamp ya lo usan.</string>
+    <string name="forum_draft_phone">Mi %1$s (Android %2$s) no lo soporta. Lo comprobé con Bit-Perfect Audio Detector, una app de código abierto (https://github.com/branches78/Bit-Perfect-Audio-Detector):</string>
+    <string name="forum_draft_no_flag">Su configuración de audio no declara ninguna salida con AUDIO_OUTPUT_FLAG_BIT_PERFECT.</string>
+    <string name="forum_draft_no_dac_mode">Con un DAC USB conectado, Android no ofrece ningún modo bit-perfect.</string>
+    <string name="forum_draft_no_aidl">Su manifiesto VINTF no declara la HAL de audio AIDL (android.hardware.audio.core), que el bit-perfect requiere.</string>
+    <string name="forum_draft_request">Los teléfonos de otros fabricantes ya lo habilitan. Les pido que consideren agregar el soporte bit-perfect a la configuración de audio USB en una próxima actualización. Muchos audiófilos elegirán sus teléfonos por esto.</string>
+    <string name="forum_draft_thanks">¡Gracias!</string>
 </resources>

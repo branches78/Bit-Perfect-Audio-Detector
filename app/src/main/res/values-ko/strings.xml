@@ -114,4 +114,19 @@
     <string name="note_include_not_found">include를 찾을 수 없습니다: %1$s</string>
     <string name="yes">예</string>
     <string name="no">아니요</string>
+    <!-- "Ask the manufacturer" card and the draft for the manufacturer's forum (ForumDraft) -->
+    <string name="card_ask_manufacturer">제조사에 요청</string>
+    <string name="ask_manufacturer_title">bit-perfect 지원 요청</string>
+    <string name="ask_manufacturer_text">이 휴대폰에서 네이티브 bit-perfect를 활성화할 수 있는 것은 %1$s뿐입니다. 이 텍스트를 복사하고 포럼을 열어 새 주제로 게시하세요. 요청하는 사람이 많을수록 업데이트로 지원될 가능성이 높아집니다.</string>
+    <string name="ask_manufacturer_english">이 제조사의 포럼은 사용자의 언어를 지원하지 않아 텍스트가 영어로 되어 있습니다.</string>
+    <string name="action_copy_text">텍스트 복사</string>
+    <string name="action_open_forum">포럼 열기</string>
+    <string name="forum_draft_title">기능 요청: %1$s의 네이티브 bit-perfect USB 오디오</string>
+    <string name="forum_draft_intro">Android 14부터 Android는 USB DAC를 통한 bit-perfect 재생을 지원합니다 (https://source.android.com/docs/core/audio/preferred-mixer-attr). AudioMixerAttributes와 MIXER_BEHAVIOR_BIT_PERFECT를 사용하면 시스템 믹서를 거치지 않고 DAC가 원본 오디오를 자체 샘플링 레이트와 비트 심도로 받습니다. Symfonium, Hi-Res Radio, PureBit, Plexamp 같은 음악 앱은 이미 이 기능을 사용하고 있습니다.</string>
+    <string name="forum_draft_phone">제 %1$s(Android %2$s)는 이를 지원하지 않습니다. 오픈 소스 앱인 Bit-Perfect Audio Detector로 확인했습니다 (https://github.com/branches78/Bit-Perfect-Audio-Detector).</string>
+    <string name="forum_draft_no_flag">오디오 구성에 AUDIO_OUTPUT_FLAG_BIT_PERFECT를 선언한 출력이 없습니다.</string>
+    <string name="forum_draft_no_dac_mode">USB DAC를 연결해도 Android가 bit-perfect 모드를 제공하지 않습니다.</string>
+    <string name="forum_draft_no_aidl">VINTF 매니페스트에 bit-perfect에 필요한 AIDL 오디오 HAL(android.hardware.audio.core)이 선언되어 있지 않습니다.</string>
+    <string name="forum_draft_request">다른 제조사의 휴대폰은 이미 이를 지원합니다. 향후 업데이트에서 USB 오디오 구성에 bit-perfect 지원을 추가하는 것을 검토해 주세요. 많은 오디오 애호가들이 이 때문에 귀사의 휴대폰을 선택할 것입니다.</string>
+    <string name="forum_draft_thanks">감사합니다!</string>
 </resources>

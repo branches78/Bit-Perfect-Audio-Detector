@@ -115,4 +115,19 @@
     <string name="note_include_not_found">include नहीं मिला: %1$s</string>
     <string name="yes">हाँ</string>
     <string name="no">नहीं</string>
+    <!-- "Ask the manufacturer" card and the draft for the manufacturer's forum (ForumDraft) -->
+    <string name="card_ask_manufacturer">निर्माता से अनुरोध करें</string>
+    <string name="ask_manufacturer_title">bit-perfect सपोर्ट का अनुरोध करें</string>
+    <string name="ask_manufacturer_text">इस फ़ोन पर नेटिव bit-perfect सिर्फ़ %1$s चालू कर सकता है। यह टेक्स्ट कॉपी करें, फ़ोरम खोलें और इसे नए विषय के रूप में पोस्ट करें: जितने ज़्यादा लोग इसकी माँग करेंगे, अपडेट में इसके आने की संभावना उतनी ही ज़्यादा होगी।</string>
+    <string name="ask_manufacturer_english">टेक्स्ट अंग्रेज़ी में है, क्योंकि इस निर्माता का फ़ोरम आपकी भाषा में नहीं है।</string>
+    <string name="action_copy_text">टेक्स्ट कॉपी करें</string>
+    <string name="action_open_forum">फ़ोरम खोलें</string>
+    <string name="forum_draft_title">फ़ीचर अनुरोध: %1$s पर नेटिव bit-perfect USB ऑडियो</string>
+    <string name="forum_draft_intro">Android 14 से, Android USB DAC के ज़रिए bit-perfect प्लेबैक सपोर्ट करता है (https://source.android.com/docs/core/audio/preferred-mixer-attr): AudioMixerAttributes और MIXER_BEHAVIOR_BIT_PERFECT के साथ, सिस्टम मिक्सर को बायपास किया जाता है और DAC को ओरिजिनल ऑडियो उसकी अपनी सैंपल रेट और बिट डेप्थ पर मिलता है। Symfonium, Hi-Res Radio, PureBit और Plexamp जैसे म्यूज़िक ऐप पहले से इसका इस्तेमाल करते हैं।</string>
+    <string name="forum_draft_phone">मेरा %1$s (Android %2$s) इसे सपोर्ट नहीं करता। मैंने इसे ओपन-सोर्स ऐप Bit-Perfect Audio Detector से जाँचा (https://github.com/branches78/Bit-Perfect-Audio-Detector):</string>
+    <string name="forum_draft_no_flag">इसका ऑडियो कॉन्फ़िगरेशन AUDIO_OUTPUT_FLAG_BIT_PERFECT वाला कोई आउटपुट घोषित नहीं करता।</string>
+    <string name="forum_draft_no_dac_mode">USB DAC कनेक्ट होने पर भी Android कोई bit-perfect मोड नहीं देता।</string>
+    <string name="forum_draft_no_aidl">इसका VINTF मैनिफ़ेस्ट AIDL ऑडियो HAL (android.hardware.audio.core) घोषित नहीं करता, जो bit-perfect के लिए ज़रूरी है।</string>
+    <string name="forum_draft_request">दूसरे निर्माताओं के फ़ोन इसे पहले से सपोर्ट करते हैं। कृपया किसी आने वाले अपडेट में USB ऑडियो कॉन्फ़िगरेशन में bit-perfect सपोर्ट जोड़ने पर विचार करें। कई ऑडियोफ़ाइल्स इसी वजह से आपके फ़ोन चुनेंगे।</string>
+    <string name="forum_draft_thanks">धन्यवाद!</string>
 </resources>

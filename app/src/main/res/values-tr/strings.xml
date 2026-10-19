@@ -115,4 +115,19 @@
     <string name="note_include_not_found">Include bulunamadı: %1$s</string>
     <string name="yes">evet</string>
     <string name="no">hayır</string>
+    <!-- "Ask the manufacturer" card and the draft for the manufacturer's forum (ForumDraft) -->
+    <string name="card_ask_manufacturer">Üreticiden isteyin</string>
+    <string name="ask_manufacturer_title">Bit-perfect desteği talep edin</string>
+    <string name="ask_manufacturer_text">Bu telefonda yerel bit-perfect\'i yalnızca %1$s etkinleştirebilir. Bu metni kopyalayın, forumu açın ve yeni bir konu olarak paylaşın: ne kadar çok kişi isterse, bir güncellemeyle gelme olasılığı o kadar artar.</string>
+    <string name="ask_manufacturer_english">Bu üreticinin forumu sizin dilinizde olmadığı için metin İngilizcedir.</string>
+    <string name="action_copy_text">Metni kopyala</string>
+    <string name="action_open_forum">Forumu aç</string>
+    <string name="forum_draft_title">Özellik isteği: %1$s için yerel bit-perfect USB ses</string>
+    <string name="forum_draft_intro">Android 14\'ten beri Android, USB DAC\'ler üzerinden bit-perfect çalmayı destekliyor (https://source.android.com/docs/core/audio/preferred-mixer-attr): AudioMixerAttributes ve MIXER_BEHAVIOR_BIT_PERFECT ile sistem mikseri devre dışı kalır ve DAC orijinal sesi kendi örnekleme hızı ve bit derinliğiyle alır. Symfonium, Hi-Res Radio, PureBit ve Plexamp gibi müzik uygulamaları bunu zaten kullanıyor.</string>
+    <string name="forum_draft_phone">%1$s (Android %2$s) telefonum bunu desteklemiyor. Açık kaynaklı bir uygulama olan Bit-Perfect Audio Detector ile kontrol ettim (https://github.com/branches78/Bit-Perfect-Audio-Detector):</string>
+    <string name="forum_draft_no_flag">Ses yapılandırması, AUDIO_OUTPUT_FLAG_BIT_PERFECT içeren hiçbir çıkış beyan etmiyor.</string>
+    <string name="forum_draft_no_dac_mode">USB DAC bağlıyken Android hiçbir bit-perfect modu sunmuyor.</string>
+    <string name="forum_draft_no_aidl">VINTF manifesti, bit-perfect için gerekli olan AIDL ses HAL\'ını (android.hardware.audio.core) beyan etmiyor.</string>
+    <string name="forum_draft_request">Diğer üreticilerin telefonları bunu zaten destekliyor. Lütfen gelecek bir güncellemede USB ses yapılandırmasına bit-perfect desteği eklemeyi düşünün. Birçok odyofil telefonlarınızı bu yüzden tercih edecek.</string>
+    <string name="forum_draft_thanks">Teşekkürler!</string>
 </resources>

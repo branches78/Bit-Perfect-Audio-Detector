@@ -116,4 +116,19 @@
     <string name="note_include_not_found">Include not found: %1$s</string>
     <string name="yes">yes</string>
     <string name="no">no</string>
+    <!-- "Ask the manufacturer" card and the draft for the manufacturer's forum (ForumDraft) -->
+    <string name="card_ask_manufacturer">Ask the manufacturer</string>
+    <string name="ask_manufacturer_title">Request bit-perfect support</string>
+    <string name="ask_manufacturer_text">Only %1$s can enable native bit-perfect on this phone. Copy this text, open the forum and post it as a new topic: the more people ask for it, the more likely it is to arrive in an update.</string>
+    <string name="ask_manufacturer_english">The text is in English because this manufacturer\'s forum isn\'t in your language.</string>
+    <string name="action_copy_text">Copy text</string>
+    <string name="action_open_forum">Open forum</string>
+    <string name="forum_draft_title">Feature request: native bit-perfect USB audio on the %1$s</string>
+    <string name="forum_draft_intro">Since Android 14, Android supports bit-perfect playback over USB DACs (https://source.android.com/docs/core/audio/preferred-mixer-attr): with AudioMixerAttributes and MIXER_BEHAVIOR_BIT_PERFECT, the system mixer is bypassed and the DAC receives the original audio at its own sample rate and bit depth. Music apps like Symfonium, Hi-Res Radio, PureBit and Plexamp already use it.</string>
+    <string name="forum_draft_phone">My %1$s (Android %2$s) doesn\'t support it. I checked it with Bit-Perfect Audio Detector, an open-source app (https://github.com/branches78/Bit-Perfect-Audio-Detector):</string>
+    <string name="forum_draft_no_flag">Its audio configuration doesn\'t declare any output with AUDIO_OUTPUT_FLAG_BIT_PERFECT.</string>
+    <string name="forum_draft_no_dac_mode">With a USB DAC connected, Android reports no bit-perfect mode.</string>
+    <string name="forum_draft_no_aidl">Its VINTF manifest doesn\'t declare the AIDL audio HAL (android.hardware.audio.core), which bit-perfect requires.</string>
+    <string name="forum_draft_request">Phones from other manufacturers already enable it. Please consider adding bit-perfect support to the USB audio configuration in a future update. Many audiophiles will choose your phones based on this.</string>
+    <string name="forum_draft_thanks">Thanks!</string>
 </resources>

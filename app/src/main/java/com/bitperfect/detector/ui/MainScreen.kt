@@ -27,6 +27,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Refresh
@@ -39,6 +40,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -47,8 +49,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -56,6 +62,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -81,6 +89,8 @@ import com.bitperfect.detector.audio.PolicyNote
 import com.bitperfect.detector.audio.Report
 import com.bitperfect.detector.audio.Verdict
 import com.bitperfect.detector.audio.VerdictEngine
+import com.bitperfect.detector.report.ForumDraft
+import com.bitperfect.detector.report.ManufacturerForum
 import com.bitperfect.detector.ui.theme.statusColors
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -96,6 +106,8 @@ fun MainScreen(
 ) {
     var showDetails by rememberSaveable { mutableStateOf(false) }
     var showHelp by rememberSaveable { mutableStateOf(false) }
+    // Title of the expanded card: only one is open at a time (ExpandableCard).
+    val openCard = rememberSaveable { mutableStateOf<String?>(null) }
     if (showDetails && report != null) {
         TechnicalDetailsDialog(
             report = report,
@@ -130,26 +142,31 @@ fun MainScreen(
             }
             return@Scaffold
         }
-        LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(padding),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            item { DeviceHeader() }
-            item { VerdictCard(stringResource(R.string.card_usb_dac), report.usbDac) }
-            item { VerdictCard(stringResource(R.string.card_hi_res), report.hiRes) }
-            item { VerdictCard(stringResource(R.string.card_bit_perfect), report.bitPerfect) }
-            item {
-                VerdictCard(stringResource(R.string.card_bp_apps), report.apps) {
-                    InstalledApps(report.installedApps)
-                    SuggestedApps(report.installedApps)
-                }
-            }
-            // Any phone can send its report: the website's table also lists phones without support.
-            // Google Play's test devices and emulators can't (TestDevice).
-            if (canReport) {
+        CompositionLocalProvider(LocalOpenCard provides openCard) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize().padding(padding),
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                item { DeviceHeader() }
+                item { VerdictCard(stringResource(R.string.card_usb_dac), report.usbDac) }
+                item { VerdictCard(stringResource(R.string.card_hi_res), report.hiRes) }
+                item { VerdictCard(stringResource(R.string.card_bit_perfect), report.bitPerfect) }
                 item {
-                    ContributeCard(sending = sending, onSend = { onOpenReport(); showDetails = true })
+                    VerdictCard(stringResource(R.string.card_bp_apps), report.apps) {
+                        InstalledApps(report.installedApps)
+                        SuggestedApps(report.installedApps)
+                    }
+                }
+                // Any phone can send its report: the website's table also lists phones without support.
+                // Google Play's test devices and emulators can't (TestDevice).
+                if (canReport) {
+                    item {
+                        ContributeCard(sending = sending, onSend = { onOpenReport(); showDetails = true })
+                    }
+                }
+                if (ForumDraft.applies(report)) {
+                    item { AskManufacturerCard(report) }
                 }
             }
         }
@@ -186,6 +203,61 @@ private fun ContributeCard(sending: Boolean, onSend: () -> Unit) {
         Box(Modifier.fillMaxWidth().padding(top = 8.dp), contentAlignment = Alignment.Center) {
             Button(onClick = onSend, enabled = !sending) {
                 Text(stringResource(R.string.action_send_report))
+            }
+        }
+    }
+}
+
+/**
+ * For phones without bit-perfect: a draft to post in the manufacturer's forum asking for it, with
+ * buttons to copy it and open the forum. Nothing is sent from the app.
+ */
+@Composable
+private fun AskManufacturerCard(report: Report) {
+    val context = LocalContext.current
+    val clipboard = LocalClipboardManager.current
+    // The language the app's texts are in: the first of the phone's languages the app has, the same
+    // way Android picks the resources (with none of them, the first one, which shows the app in English).
+    val locales = LocalConfiguration.current.locales
+    val appLanguage = remember(locales) {
+        locales.getFirstMatch(ManufacturerForum.APP_LANGUAGES.toTypedArray())?.language ?: "en"
+    }
+    val forum = remember(appLanguage) { ManufacturerForum.find(android.os.Build.MANUFACTURER, appLanguage) }
+    // Built again only when the results or the language change, not on every redraw.
+    val draft = remember(report, forum.language) { ForumDraft.build(context, report, forum.language) }
+    val brand = cleanPhoneName(android.os.Build.MANUFACTURER, android.os.Build.MODEL).first
+    ExpandableCard(
+        title = stringResource(R.string.card_ask_manufacturer),
+        headline = stringResource(R.string.ask_manufacturer_title),
+        icon = Icons.Filled.Edit,
+        tint = MaterialTheme.colorScheme.primary,
+    ) {
+        Text(stringResource(R.string.ask_manufacturer_text, brand), style = MaterialTheme.typography.bodyMedium)
+        // The forum isn't in the app's language: the draft goes in English.
+        if (forum.language != appLanguage && appLanguage in ManufacturerForum.APP_LANGUAGES) {
+            Text(
+                stringResource(R.string.ask_manufacturer_english),
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(top = 8.dp),
+            )
+        }
+        Surface(
+            color = MaterialTheme.colorScheme.surface,
+            shape = MaterialTheme.shapes.small,
+            modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+        ) {
+            Text(draft, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(12.dp))
+        }
+        Row(
+            Modifier.fillMaxWidth().padding(top = 12.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+        ) {
+            // Android shows its own confirmation when something is copied.
+            OutlinedButton(onClick = { clipboard.setText(AnnotatedString(draft)) }) {
+                Text(stringResource(R.string.action_copy_text))
+            }
+            Button(onClick = { openUrl(context, forum.url) }) {
+                Text(stringResource(R.string.action_open_forum))
             }
         }
     }
@@ -316,9 +388,13 @@ private fun VerdictCard(
     ExpandableCard(title, verdict.headline, icon, tint, body)
 }
 
+/** Title of the card that's open (null = none), shared by every ExpandableCard on the screen. */
+private val LocalOpenCard = compositionLocalOf { mutableStateOf<String?>(null) }
+
 /**
  * Collapsible card: it always shows the title, the status icon and the main result; tapping it
- * expands the rest ([body]). It starts collapsed. Without [body] it can't be expanded.
+ * expands the rest ([body]) and closes the card that was open. It starts collapsed. Without [body]
+ * it can't be expanded.
  */
 @Composable
 private fun ExpandableCard(
@@ -328,14 +404,15 @@ private fun ExpandableCard(
     tint: Color,
     body: (@Composable () -> Unit)?,
 ) {
-    var expanded by rememberSaveable { mutableStateOf(false) }
+    val openCard: MutableState<String?> = LocalOpenCard.current
+    val expanded = openCard.value == title
     val arrowRotation by animateFloatAsState(if (expanded) 180f else 0f, label = "arrow")
     Card(Modifier.fillMaxWidth()) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .then(if (body != null) Modifier.clickable { expanded = !expanded } else Modifier)
+                .then(if (body != null) Modifier.clickable { openCard.value = if (expanded) null else title } else Modifier)
                 .padding(16.dp),
         ) {
             StatusIcon(icon, tint)

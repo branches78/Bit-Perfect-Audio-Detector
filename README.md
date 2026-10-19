@@ -35,7 +35,8 @@ whether a USB DAC is connected, and which installed music apps use Android's nat
 mode.
 
 Users can send their results to the public table of phones on the
-[Bit-Perfect Audio Detector website](https://bit-perfect-detector-web.onrender.com).
+[Bit-Perfect Audio Detector website](https://bit-perfect-detector-web.onrender.com). On phones without
+bit-perfect, the app also offers a ready-to-post draft to ask the manufacturer for it in its forum.
 
 - `minSdk 34`: installs only on Android 14 or later (bit-perfect mode was added in Android 14).
 - Only the `INTERNET` permission, used just to send the anonymous report when the user taps "Send".
@@ -129,6 +130,18 @@ technical details shown in the app. Only the first ones are published; the techn
 only seen by the maintainer. **Reports are anonymous:** they don't include names, email addresses,
 accounts or any other data that identifies the sender.
 
+### "Ask the manufacturer" card
+
+When the result is "No" (and the phone has USB host), the app offers a draft to post in the
+manufacturer's community forum asking for native bit-perfect support, with the phone's model,
+Android version and what the app found. "Copy text" copies it and "Open forum" opens the forum in
+the browser; **the app sends nothing**.
+
+The forum of each manufacturer is listed in `report/ManufacturerForum.kt` (checked on 2026-10-19):
+the one in the app's language when there is one, otherwise the global one. The draft
+(`report/ForumDraft.kt`) is written in the forum's language: the app's language if the forum is in
+it, English otherwise. Manufacturers that aren't on the list get a web search for their forum.
+
 ### Project structure
 
 ```
@@ -139,6 +152,9 @@ app/src/main/java/com/bitperfect/detector/
   audio/BitPerfectAppScanner.kt    Installed music apps that use native bit-perfect
   audio/Verdicts.kt                Combines both sources into the on-screen results
   report/ReportSender.kt           Sends the anonymous report to the report server
+  report/TestDevice.kt             Google Play's test devices and emulators (they don't send reports)
+  report/ManufacturerForum.kt      Manufacturers' forums for the "Ask the manufacturer" card
+  report/ForumDraft.kt             The draft to post in the manufacturer's forum
   ui/MainScreen.kt                 Compose UI and report text
 ```
 
