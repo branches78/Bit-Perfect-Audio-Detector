@@ -3,12 +3,30 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- Stepped waveform (PCM samples) -->
+    <!-- USB DAC dongle: USB-C plug on the left, audio output on the right -->
+    <path
+        android:fillColor="#7CE0C3"
+        android:pathData="M25,48 H31 A3,3 0 0 1 34,51 V57 A3,3 0 0 1 31,60 H25 A3,3 0 0 1 22,57 V51 A3,3 0 0 1 25,48 Z" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#7CE0C3"
+        android:strokeWidth="3.4"
+        android:pathData="M41,41 H67 A7,7 0 0 1 74,48 V60 A7,7 0 0 1 67,67 H41 A7,7 0 0 1 34,60 V48 A7,7 0 0 1 41,41 Z" />
     <path
         android:fillColor="#00000000"
         android:strokeColor="#7CE0C3"
         android:strokeWidth="4"
         android:strokeLineCap="round"
+        android:pathData="M75.5,54 L82,54" />
+    <path
+        android:fillColor="#7CE0C3"
+        android:pathData="M81.6,54 A3.4,3.4 0 1 0 88.4,54 A3.4,3.4 0 1 0 81.6,54 Z" />
+    <!-- Stepped waveform (PCM samples) on the DAC's body -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#7CE0C3"
+        android:strokeWidth="2.6"
+        android:strokeLineCap="round"
         android:strokeLineJoin="round"
-        android:pathData="M30,58 L30,46 L38,46 L38,38 L46,38 L46,50 L54,50 L54,66 L62,66 L62,70 L70,70 L70,58 L78,58" />
+        android:pathData="M40,57 L40,51 L46,51 L46,47.5 L52,47.5 L52,54 L58,54 L58,61 L64,61 L64,55 L68,55" />
 </vector>
