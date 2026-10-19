@@ -23,6 +23,7 @@ import com.bitperfect.detector.audio.Report
 import com.bitperfect.detector.audio.VerdictEngine
 import com.bitperfect.detector.report.ReportSender
 import com.bitperfect.detector.report.SendResult
+import com.bitperfect.detector.report.TestDevice
 import com.bitperfect.detector.ui.MainScreen
 import com.bitperfect.detector.ui.theme.BitPerfectTheme
 import kotlinx.coroutines.Dispatchers
@@ -38,6 +39,9 @@ class MainActivity : ComponentActivity() {
 
     private var report by mutableStateOf<Report?>(null)
     private var sending by mutableStateOf(false)
+
+    /** Google Play's test devices and emulators don't offer to send a report. */
+    private var canReport = true
 
     /** A full scan (policy and apps) is running or queued; "Analyze again" waits for it. */
     private var scanning by mutableStateOf(false)
@@ -66,6 +70,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         audioManager = getSystemService(AudioManager::class.java)
         probe = AudioRuntimeProbe(this)
+        canReport = !TestDevice.isAutomated(this)
 
         setContent {
             BitPerfectTheme {
@@ -73,6 +78,7 @@ class MainActivity : ComponentActivity() {
                     report = report,
                     onRefresh = { refresh(rescanPolicy = true) },
                     scanning = scanning,
+                    canReport = canReport,
                     sending = sending,
                     onSend = ::sendReport,
                     // While the user reads the send dialog, the report server wakes up.
@@ -124,7 +130,7 @@ class MainActivity : ComponentActivity() {
 
     private fun sendReport() {
         val r = report ?: return
-        if (sending) return
+        if (sending || !canReport) return
         // One report every 48 hours; the server has the same per-IP limit as a backup.
         val prefs = getSharedPreferences("reports", MODE_PRIVATE)
         val lastSent = prefs.getLong(KEY_LAST_SENT, 0L)

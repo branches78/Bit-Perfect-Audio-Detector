@@ -89,6 +89,7 @@ fun MainScreen(
     report: Report?,
     onRefresh: () -> Unit,
     scanning: Boolean,
+    canReport: Boolean,
     sending: Boolean,
     onSend: () -> Unit,
     onOpenReport: () -> Unit,
@@ -145,8 +146,11 @@ fun MainScreen(
                 }
             }
             // Any phone can send its report: the website's table also lists phones without support.
-            item {
-                ContributeCard(sending = sending, onSend = { onOpenReport(); showDetails = true })
+            // Google Play's test devices and emulators can't (TestDevice).
+            if (canReport) {
+                item {
+                    ContributeCard(sending = sending, onSend = { onOpenReport(); showDetails = true })
+                }
             }
         }
     }
