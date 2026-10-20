@@ -1,5 +1,7 @@
 <img width="1024" height="500" alt="feature-graphic-en" src="https://github.com/user-attachments/assets/f5dddb32-a296-4f57-a807-f83874a57091" />
 
+[![Donate using Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/branches78/donate)
+
 ## What is bit-perfect?
 
 Bit-perfect means the audio reaches the DAC exactly as it is in the file, bit for bit. Normally
