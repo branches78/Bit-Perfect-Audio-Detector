@@ -8,10 +8,6 @@
   <a href="https://liberapay.com/branches78/donate"><img alt="support" src="https://img.shields.io/badge/support-%E2%9D%A4-ec4899?labelColor=24292f"></a>
 </p>
 
-<p align="center">
-  <a href="https://liberapay.com/branches78/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
-</p>
-
 ## What is bit-perfect?
 
 Bit-perfect means the audio reaches the DAC exactly as it is in the file, bit for bit. Normally
