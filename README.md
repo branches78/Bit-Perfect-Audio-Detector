@@ -1,6 +1,14 @@
 <img width="1024" height="500" alt="feature-graphic-en" src="https://github.com/user-attachments/assets/f5dddb32-a296-4f57-a807-f83874a57091" />
 
 <p align="center">
+  <a href="https://github.com/branches78/Bit-Perfect-Audio-Detector/releases/latest"><img alt="release" src="https://img.shields.io/github/v/release/branches78/Bit-Perfect-Audio-Detector?label=release&labelColor=24292f&color=c6f6d5"></a>
+  <a href="https://github.com/branches78/Bit-Perfect-Audio-Detector/releases"><img alt="downloads" src="https://img.shields.io/github/downloads/branches78/Bit-Perfect-Audio-Detector/total?label=downloads&labelColor=24292f&color=c6f6d5"></a>
+  <img alt="Android 14+" src="https://img.shields.io/badge/Android-14%2B-c6f6d5?labelColor=24292f">
+  <a href="LICENSE"><img alt="licence" src="https://img.shields.io/github/license/branches78/Bit-Perfect-Audio-Detector?label=licence&labelColor=24292f&color=c6f6d5"></a>
+  <a href="https://liberapay.com/branches78/donate"><img alt="support" src="https://img.shields.io/badge/support-%E2%9D%A4-ec4899?labelColor=24292f"></a>
+</p>
+
+<p align="center">
   <a href="https://liberapay.com/branches78/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
 </p>
 
