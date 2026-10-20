@@ -92,6 +92,7 @@ class BitPerfectAppScanner(private val context: Context) {
             BitPerfectApp("Omnia Music Player", "com.rhmsoft.omnia"),
             BitPerfectApp("Audilux Music Player", "com.audilux.musicplayer.mp3player"),
             BitPerfectApp("jetAudio Hi-Res Music Player", "com.jetappfactory.jetaudio"),
+            BitPerfectApp("LastWave", "com.lastwave.app", website = "https://lastwave.app/"),
         )
 
         /** Name of the system method that turns on bit-perfect mode. */
@@ -138,4 +139,5 @@ class BitPerfectAppScanner(private val context: Context) {
     }
 }
 
-data class BitPerfectApp(val name: String, val packageName: String)
+/** [website]: where to get the app when it isn't on Google Play (otherwise its Play Store listing is used). */
+data class BitPerfectApp(val name: String, val packageName: String, val website: String? = null)

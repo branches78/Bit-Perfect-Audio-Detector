@@ -274,7 +274,10 @@ private fun InstalledApps(installed: List<BitPerfectApp>) {
     }
 }
 
-/** Known compatible apps (BitPerfectAppScanner.SUGGESTED_APPS) that aren't installed, linked to the Play Store. */
+/**
+ * Known compatible apps (BitPerfectAppScanner.SUGGESTED_APPS) that aren't installed, linked to the Play Store
+ * (or to their website when they aren't on it).
+ */
 @Composable
 private fun SuggestedApps(installed: List<BitPerfectApp>) {
     val context = LocalContext.current
@@ -289,15 +292,15 @@ private fun SuggestedApps(installed: List<BitPerfectApp>) {
             modifier = Modifier.padding(top = 10.dp),
         )
     }
-    others.forEach { (name, pkg) ->
+    others.forEach { app ->
         Text(
-            "· $name",
+            "· ${app.name}",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.primary,
             textDecoration = TextDecoration.Underline,
             modifier = Modifier
                 .padding(top = 4.dp)
-                .clickable { openPlayStore(context, pkg) }
+                .clickable { app.website?.let { openUrl(context, it) } ?: openPlayStore(context, app.packageName) }
                 .padding(vertical = 4.dp),
         )
     }
