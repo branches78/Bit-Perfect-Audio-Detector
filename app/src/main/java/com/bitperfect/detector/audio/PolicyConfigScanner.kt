@@ -17,6 +17,8 @@ import java.io.StringReader
 class PolicyConfigScanner(
     private val searchDirs: List<String> = DEFAULT_SEARCH_DIRS,
     private val vintfDirs: List<String> = DEFAULT_VINTF_DIRS,
+    /** The phone's vendor SKU (null if unknown): see [readVendorSku]. */
+    private val vendorSku: String? = readVendorSku(),
 ) {
 
     fun scan(): PolicyScanResult {
@@ -57,8 +59,10 @@ class PolicyConfigScanner(
             children.filter { it.isFile && isRootPolicyName(it.name) }
                 .sortedBy { it.name }
                 .forEach { found += it }
-            // Per-SKU subfolders, e.g. /vendor/etc/audio/sku_xxx/
-            children.filter { it.isDirectory }.forEach { sub ->
+            // Per-SKU subfolders, e.g. /vendor/etc/audio/sku_xxx/. Some vendor images carry the
+            // configuration of several chips; Android only loads the phone's own (sku_<vendorSku>).
+            // When the SKU can't be read, all of them are read, as before.
+            children.filter { it.isDirectory && isOwnSku(it.name) }.forEach { sub ->
                 sub.listFiles()?.filter { it.isFile && isRootPolicyName(it.name) }
                     ?.forEach { found += it }
             }
@@ -68,6 +72,9 @@ class PolicyConfigScanner(
         }
         return found.distinctBy { it.absolutePath }
     }
+
+    private fun isOwnSku(dirName: String) =
+        vendorSku == null || !dirName.startsWith("sku_") || dirName == "sku_$vendorSku"
 
     private fun isRootPolicyName(name: String) =
         name.startsWith("audio_policy_configuration") && name.endsWith(".xml")
@@ -159,6 +166,19 @@ class PolicyConfigScanner(
         )
 
         private const val XINCLUDE_NS = "http://www.w3.org/2001/XInclude"
+
+        /**
+         * ro.boot.product.vendor.sku, which Android uses to pick /vendor/etc/audio/sku_<sku>/. Read
+         * with getprop (there's no public API); null if it's empty or can't be read.
+         */
+        fun readVendorSku(): String? = try {
+            val process = ProcessBuilder("getprop", "ro.boot.product.vendor.sku").redirectErrorStream(true).start()
+            val value = process.inputStream.bufferedReader().use { it.readText() }.trim()
+            process.waitFor()
+            value.takeIf { it.matches(Regex("[A-Za-z0-9_.-]{1,64}")) }
+        } catch (e: Exception) {
+            null
+        }
 
         /** Android-independent parser, so it can be tested on the JVM. */
         fun parsePolicyXml(xml: String, source: String): ParsedPolicyFile {

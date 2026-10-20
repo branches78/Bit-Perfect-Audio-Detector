@@ -82,6 +82,7 @@ class PolicyConfigScannerTest {
         return PolicyConfigScanner(
             searchDirs = listOf(vendor.absolutePath),
             vintfDirs = emptyList(),
+            vendorSku = null,
         ).scan()
     }
 
@@ -124,8 +125,23 @@ class PolicyConfigScannerTest {
     }
 
     @Test
+    fun readsOnlyThePhonesOwnSkuFolder() {
+        val audio = tmp.newFolder("vendor_etc_audio")
+        for (sku in listOf("cliffs", "pineapple")) {
+            audio.resolve("sku_$sku").mkdirs()
+            audio.resolve("sku_$sku/audio_policy_configuration.xml")
+                .writeText("""<module name="$sku"><mixPorts></mixPorts></module>""")
+        }
+        fun modules(sku: String?) = PolicyConfigScanner(listOf(audio.absolutePath), emptyList(), sku).scan()
+            .modules.map { it.name }.sorted()
+        assertEquals(listOf("cliffs"), modules("cliffs"))
+        // Unknown SKU: every folder, as before.
+        assertEquals(listOf("cliffs", "pineapple"), modules(null))
+    }
+
+    @Test
     fun unreadableConfigIsNotReadable() {
-        val r = PolicyConfigScanner(listOf(tmp.newFolder("empty").absolutePath), emptyList()).scan()
+        val r = PolicyConfigScanner(listOf(tmp.newFolder("empty").absolutePath), emptyList(), null).scan()
         assertFalse(r.readable)
     }
 

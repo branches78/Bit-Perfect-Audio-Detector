@@ -58,7 +58,7 @@ bit-perfect, the app also offers a ready-to-post draft to ask the manufacturer f
 1. Open the project in Android Studio (Ladybug or later) and let Gradle sync.
 2. Run the `app` configuration on a phone with Android 14+, or run `./gradlew assembleDebug`.
    The APK is written to `app/build/outputs/apk/debug/`.
-3. Unit tests (policy reader and app scanner): `./gradlew test`.
+3. Unit tests: `./gradlew test`.
 
 #### Release build
 
@@ -71,8 +71,9 @@ by git; see `keystore.properties.example`). Without that file they come out unsi
 | Situation | Source | Reliability |
 |---|---|---|
 | USB DAC connected | `AudioManager.getSupportedMixerAttributes(dac)` contains `MIXER_BEHAVIOR_BIT_PERFECT` | Definitive |
-| No DAC | Reads `audio_policy_configuration.xml` (and its `xi:include`s, e.g. `usb_audio_policy_configuration.xml`) from `/odm/etc`, `/vendor/etc/audio`, `/vendor/etc` and `/system/etc`, and looks for a `mixPort` with `AUDIO_OUTPUT_FLAG_BIT_PERFECT` routed to `AUDIO_DEVICE_OUT_USB_DEVICE` | High, "according to the manufacturer" |
+| No DAC | Reads `audio_policy_configuration.xml` (and its `xi:include`s, e.g. `usb_audio_policy_configuration.xml`) from `/odm/etc`, `/vendor/etc/audio`, `/vendor/etc` and `/system/etc` (of the per-chip `sku_*` folders, only the phone's own, from `ro.boot.product.vendor.sku`, when it can be read), and looks for a `mixPort` with `AUDIO_OUTPUT_FLAG_BIT_PERFECT` routed to `AUDIO_DEVICE_OUT_USB_DEVICE` | High, "according to the manufacturer" |
 | No DAC, Hi-Res | Output `mixPort`s with profiles >= 192 kHz and >= 24 bits, dynamic USB output, `getDirectPlaybackSupport(192k/24)` and the profiles of connected outputs | High / medium |
+| DAC's USB Audio Class | `bInterfaceProtocol` of the DAC's audio control interface, from `UsbManager.getDeviceList()` (no USB permission; the UAC3 configuration first, as Linux does) | High |
 
 #### Main limitation
 
@@ -124,7 +125,7 @@ Node.js server that forwards it to the maintainer by email and **stores nothing*
 reviews each report and adds the phone to the website's table. The website itself isn't part of this
 repository.
 
-The app allows one report every 48 hours, and the server enforces the same limit per IP address
+The app allows one report every 24 hours, and the server enforces the same limit per IP address
 (it keeps only a keyed hash of the IP in memory, never the IP itself).
 
 The URLs are set in `REPORT_SERVER_URL` and `WEBSITE_URL` (`app/build.gradle.kts`). If you fork the
@@ -132,8 +133,9 @@ project, deploy your own server and point those settings to it.
 
 #### What a report contains
 
-Phone manufacturer and model, Android version, the detected audio capabilities (with and without
-a DAC, and the DAC's name if one is connected), the names of compatible installed apps, and the
+Phone manufacturer and model, Android version, firmware version (build number), the detected
+audio capabilities (with and without a DAC, and the DAC's name and USB Audio Class if one is
+connected), the names of compatible installed apps, and the
 technical details shown in the app. Only the first ones are published; the technical details are
 only seen by the maintainer. **Reports are anonymous:** they don't include names, email addresses,
 accounts or any other data that identifies the sender.

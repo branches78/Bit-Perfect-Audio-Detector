@@ -131,7 +131,7 @@ class MainActivity : ComponentActivity() {
     private fun sendReport() {
         val r = report ?: return
         if (sending || !canReport) return
-        // One report every 48 hours; the server has the same per-IP limit as a backup.
+        // One report every 24 hours; the server has the same per-IP limit as a backup.
         val prefs = getSharedPreferences("reports", MODE_PRIVATE)
         val lastSent = prefs.getLong(KEY_LAST_SENT, 0L)
         if (System.currentTimeMillis() - lastSent < REPORT_INTERVAL_MS) {
@@ -145,7 +145,7 @@ class MainActivity : ComponentActivity() {
             if (result == SendResult.SENT) prefs.edit().putLong(KEY_LAST_SENT, System.currentTimeMillis()).apply()
             val message = when (result) {
                 SendResult.SENT -> R.string.report_sent
-                // This phone passed its own 48-hour check, so another report came from the same IP.
+                // This phone passed its own 24-hour check, so another report came from the same IP.
                 SendResult.RATE_LIMITED -> R.string.report_rate_limited_network
                 SendResult.BUSY -> R.string.report_busy
                 SendResult.FAILED -> R.string.report_failed
@@ -157,6 +157,6 @@ class MainActivity : ComponentActivity() {
 
     private companion object {
         const val KEY_LAST_SENT = "last_sent_at"
-        const val REPORT_INTERVAL_MS = 48 * 3600_000L
+        const val REPORT_INTERVAL_MS = 24 * 3600_000L
     }
 }

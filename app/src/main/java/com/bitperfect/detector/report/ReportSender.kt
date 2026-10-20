@@ -18,6 +18,31 @@ import java.util.Locale
 
 enum class SendResult { SENT, RATE_LIMITED, BUSY, FAILED }
 
+/** "eng.<user>." in the build number of self-built ROMs. */
+private val BUILDER = Regex("""\beng\.[^.\s]+\.""")
+
+/** The phone's firmware version, as firmwareVersion(display, incremental) puts it together. */
+fun firmwareVersion(): String = firmwareVersion(Build.DISPLAY.orEmpty(), Build.VERSION.INCREMENTAL.orEmpty())
+
+/**
+ * The phone's firmware version, which can differ by region: the build number (Build.DISPLAY), plus
+ * Build.VERSION.INCREMENTAL when it isn't part of it and reads like a version. Samsung and Xiaomi
+ * put the region there ("S918BXXU3BWK5", "OS2.0.206.0.VNOMIXM"); Pixels and Motorola only a build
+ * counter or a hash ("13034373", "c5b5d0"), which adds nothing.
+ * Self-built ROMs ("eng" builds) include whoever compiled them ("eng.john.20240901.123456"): that
+ * name is removed, since it could be the user's own.
+ */
+fun firmwareVersion(display: String, incremental: String): String {
+    val d = display.trim().replace(BUILDER, "eng.")
+    val inc = incremental.trim().replace(BUILDER, "eng.")
+    val readable = Regex("[G-Zg-z]").containsMatchIn(inc)
+    return when {
+        inc.isEmpty() || !readable || d.contains(inc) -> d.ifEmpty { inc }
+        d.isEmpty() -> inc
+        else -> "$d ($inc)"
+    }
+}
+
 /**
  * Sends the anonymous report to the report server (github.com/branches78/Bit-Perfect-Audio-Detector-Server),
  * which forwards it to the developer by email. The app never talks to Resend: its key only lives on the server.
@@ -90,6 +115,7 @@ object ReportSender {
                     .put("model", Build.MODEL)
                     .put("device", Build.DEVICE)
                     .put("android", Build.VERSION.RELEASE)
+                    .put("firmware", firmwareVersion())
                     .put("sdk", Build.VERSION.SDK_INT),
             )
             .put(
@@ -105,6 +131,7 @@ object ReportSender {
                 dac?.let {
                     JSONObject()
                         .put("name", it.productName)
+                        .put("uac", it.uac ?: JSONObject.NULL)
                         .put("maxRate", it.maxSampleRate)
                         .put("maxBits", it.maxBitDepth)
                         .put("bitPerfect", it.bitPerfectSupported)

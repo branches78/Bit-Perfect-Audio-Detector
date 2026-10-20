@@ -26,6 +26,7 @@
     <string name="report_name_note">अगर आपका फ़ोन कोई आंतरिक मॉडल कोड बताता है, तो उसे उसके व्यावसायिक नाम से प्रकाशित किया जाता है।</string>
     <string name="field_model">फ़ोन मॉडल</string>
     <string name="field_android">Android वर्ज़न</string>
+    <string name="field_firmware">फ़र्मवेयर वर्शन</string>
     <string name="field_res_no_dac">DAC के बिना अधिकतम रिज़ॉल्यूशन</string>
     <string name="field_res_dac">DAC के साथ अधिकतम रिज़ॉल्यूशन</string>
     <string name="field_resolution">%1$s / %2$d बिट</string>
@@ -34,7 +35,7 @@
     <string name="no_app_to_open_link">इस लिंक को खोलने के लिए कोई ऐप नहीं मिला।</string>
     <string name="report_sending">रिपोर्ट भेजी जा रही है… इसमें एक मिनट तक लग सकता है।</string>
     <string name="report_sent">रिपोर्ट भेज दी गई। धन्यवाद!</string>
-    <string name="report_rate_limited">हर 48 घंटे में एक रिपोर्ट भेजी जा सकती है, और आप हाल ही में एक भेज चुके हैं। धन्यवाद!</string>
+    <string name="report_rate_limited">हर 24 घंटे में एक रिपोर्ट भेजी जा सकती है, और आप हाल ही में एक भेज चुके हैं। धन्यवाद!</string>
     <string name="report_rate_limited_network">हाल ही में आपके नेटवर्क से पहले ही एक रिपोर्ट भेजी जा चुकी है। कृपया बाद में फिर से कोशिश करें। धन्यवाद!</string>
     <string name="report_failed">रिपोर्ट नहीं भेजी जा सकी। अपना इंटरनेट कनेक्शन जाँचें और फिर से कोशिश करें।</string>
     <string name="report_busy">आज बहुत अधिक रिपोर्ट मिल चुकी हैं। कृपया कल फिर से कोशिश करें। धन्यवाद!</string>

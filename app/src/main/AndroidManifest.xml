@@ -4,7 +4,8 @@
     <!-- Sending the anonymous report to the report server. -->
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- USB isn't used directly: the app only reads what AudioManager exposes. -->
+    <!-- No USB permission is needed: the app reads what AudioManager exposes and, for the DAC's USB
+         Audio Class, the descriptors in UsbManager's device list (it never opens the device). -->
     <uses-feature android:name="android.hardware.usb.host" android:required="false" />
 
     <!-- Music apps checked by BitPerfectAppScanner; without this, Android 11+ hides them. -->

@@ -91,6 +91,7 @@ import com.bitperfect.detector.audio.Verdict
 import com.bitperfect.detector.audio.VerdictEngine
 import com.bitperfect.detector.report.ForumDraft
 import com.bitperfect.detector.report.ManufacturerForum
+import com.bitperfect.detector.report.firmwareVersion
 import com.bitperfect.detector.ui.theme.statusColors
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -605,11 +606,13 @@ object ReportText {
         return listOf(
             c.getString(R.string.field_model) to phoneName(),
             c.getString(R.string.field_android) to android.os.Build.VERSION.RELEASE,
+            c.getString(R.string.field_firmware) to firmwareVersion().ifBlank { none },
             c.getString(R.string.card_bit_perfect) to r.bitPerfect.headline,
             c.getString(R.string.field_res_no_dac) to noDac,
             c.getString(R.string.field_res_dac) to
                 (dac?.takeIf { it.maxSampleRate > 0 }?.let { res(it.maxSampleRate, it.maxBitDepth) } ?: none),
-            c.getString(R.string.card_usb_dac) to (dac?.displayName?.ifBlank { null } ?: none),
+            c.getString(R.string.card_usb_dac) to
+                (dac?.displayName?.ifBlank { null }?.let { name -> dac.uac?.let { "$name ($it)" } ?: name } ?: none),
             c.getString(R.string.card_bp_apps) to r.installedApps.joinToString { it.name }.ifBlank { none },
         )
     }
@@ -645,6 +648,7 @@ object ReportText {
             // Only USB devices (DACs) are named: Bluetooth devices often carry a name the user gave
             // them ("John's AirPods"), and the report must stay anonymous.
             if (d.isUsb && d.productName.isNotBlank()) append(" \"${d.productName}\"")
+            d.uac?.let { append(" · $it") }
             if (d.maxSampleRate > 0) append(" · ${VerdictEngine.khz(c, d.maxSampleRate)}/${d.maxBitDepth}b")
             if (d.isUsb) {
                 append(" · " + c.getString(R.string.tech_mixer_attrs, d.mixerAttributesCount))

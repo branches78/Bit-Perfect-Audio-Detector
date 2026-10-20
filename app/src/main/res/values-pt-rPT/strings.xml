@@ -27,6 +27,7 @@
     <string name="report_name_note">Se o seu telemóvel indicar um código de modelo interno, é publicado com o seu nome comercial.</string>
     <string name="field_model">Modelo do telemóvel</string>
     <string name="field_android">Versão do Android</string>
+    <string name="field_firmware">Versão do firmware</string>
     <string name="field_res_no_dac">Resolução máx. sem DAC</string>
     <string name="field_res_dac">Resolução máx. com DAC</string>
     <string name="field_resolution">%1$s / %2$d bits</string>
@@ -35,7 +36,7 @@
     <string name="no_app_to_open_link">Não há nenhuma app para abrir esta ligação.</string>
     <string name="report_sending">A enviar o relatório… pode demorar até um minuto.</string>
     <string name="report_sent">Relatório enviado. Obrigado!</string>
-    <string name="report_rate_limited">Só pode enviar um relatório a cada 48 horas e já enviou um recentemente. Obrigado!</string>
+    <string name="report_rate_limited">Só pode enviar um relatório a cada 24 horas e já enviou um recentemente. Obrigado!</string>
     <string name="report_rate_limited_network">Já foi enviado recentemente um relatório a partir da sua rede. Tente novamente mais tarde. Obrigado!</string>
     <string name="report_failed">Não foi possível enviar o relatório. Verifique a ligação à internet e tente novamente.</string>
     <string name="report_busy">Hoje foram recebidos demasiados relatórios. Tente novamente amanhã. Obrigado!</string>
