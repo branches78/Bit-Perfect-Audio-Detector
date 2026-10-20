@@ -1,5 +1,6 @@
 package com.bitperfect.detector
 
+import android.content.SharedPreferences
 import android.media.AudioDeviceCallback
 import android.media.AudioDeviceInfo
 import android.media.AudioManager
@@ -131,10 +132,11 @@ class MainActivity : ComponentActivity() {
     private fun sendReport() {
         val r = report ?: return
         if (sending || !canReport) return
-        // One report every 24 hours; the server has the same per-IP limit as a backup.
+        // At most two reports every 24 hours; the server has the same per-IP limit as a backup.
         val prefs = getSharedPreferences("reports", MODE_PRIVATE)
-        val lastSent = prefs.getLong(KEY_LAST_SENT, 0L)
-        if (System.currentTimeMillis() - lastSent < REPORT_INTERVAL_MS) {
+        val now = System.currentTimeMillis()
+        val recent = sentTimes(prefs).filter { now - it in 0 until REPORT_INTERVAL_MS }
+        if (recent.size >= MAX_REPORTS) {
             Toast.makeText(this, R.string.report_rate_limited, Toast.LENGTH_LONG).show()
             return
         }
@@ -142,10 +144,13 @@ class MainActivity : ComponentActivity() {
         Toast.makeText(this, R.string.report_sending, Toast.LENGTH_LONG).show()
         lifecycleScope.launch {
             val result = ReportSender.send(this@MainActivity, r)
-            if (result == SendResult.SENT) prefs.edit().putLong(KEY_LAST_SENT, System.currentTimeMillis()).apply()
+            if (result == SendResult.SENT) {
+                val times = (recent + System.currentTimeMillis()).takeLast(MAX_REPORTS)
+                prefs.edit().putString(KEY_SENT_AT, times.joinToString(",")).remove(KEY_LAST_SENT).apply()
+            }
             val message = when (result) {
                 SendResult.SENT -> R.string.report_sent
-                // This phone passed its own 24-hour check, so another report came from the same IP.
+                // This phone passed its own check, so other reports came from the same IP.
                 SendResult.RATE_LIMITED -> R.string.report_rate_limited_network
                 SendResult.BUSY -> R.string.report_busy
                 SendResult.FAILED -> R.string.report_failed
@@ -155,8 +160,18 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    /** When this phone sent its latest reports (up to [MAX_REPORTS]), in milliseconds. */
+    private fun sentTimes(prefs: SharedPreferences): List<Long> {
+        val times = prefs.getString(KEY_SENT_AT, null)?.split(",")?.mapNotNull { it.toLongOrNull() }.orEmpty()
+        // Versions up to 1.0.4 kept only the last one.
+        val legacy = prefs.getLong(KEY_LAST_SENT, 0L).takeIf { it > 0 }
+        return listOfNotNull(legacy) + times
+    }
+
     private companion object {
+        const val KEY_SENT_AT = "sent_at"
         const val KEY_LAST_SENT = "last_sent_at"
+        const val MAX_REPORTS = 2
         const val REPORT_INTERVAL_MS = 24 * 3600_000L
     }
 }

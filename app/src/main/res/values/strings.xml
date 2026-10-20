@@ -36,7 +36,7 @@
     <string name="no_app_to_open_link">No app found to open this link.</string>
     <string name="report_sending">Sending report… it may take up to a minute.</string>
     <string name="report_sent">Report sent. Thank you!</string>
-    <string name="report_rate_limited">You can send one report every 24 hours, and you\'ve already sent one recently. Thank you!</string>
+    <string name="report_rate_limited">You can send up to two reports every 24 hours, and you\'ve already sent two. Thank you!</string>
     <string name="report_rate_limited_network">A report was already sent from your network recently. Please try again later. Thank you!</string>
     <string name="report_failed">Couldn\'t send the report. Check your internet connection and try again.</string>
     <string name="report_busy">Too many reports have been received today. Please try again tomorrow. Thank you!</string>

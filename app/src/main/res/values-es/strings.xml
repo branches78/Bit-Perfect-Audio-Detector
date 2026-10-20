@@ -36,7 +36,7 @@
     <string name="no_app_to_open_link">No hay ninguna app para abrir este enlace.</string>
     <string name="report_sending">Enviando el reporte… puede tardar hasta un minuto.</string>
     <string name="report_sent">Reporte enviado. ¡Gracias!</string>
-    <string name="report_rate_limited">Solo se puede enviar un reporte cada 24 horas y ya enviaste uno hace poco. ¡Gracias!</string>
+    <string name="report_rate_limited">Puedes enviar hasta dos reportes cada 24 horas y ya enviaste dos. ¡Gracias!</string>
     <string name="report_rate_limited_network">Hace poco ya se envió un reporte desde tu red. Inténtalo más tarde. ¡Gracias!</string>
     <string name="report_failed">No se pudo enviar el reporte. Revisa tu conexión a internet e inténtalo de nuevo.</string>
     <string name="report_busy">Hoy se han recibido demasiados reportes. Inténtalo de nuevo mañana. ¡Gracias!</string>

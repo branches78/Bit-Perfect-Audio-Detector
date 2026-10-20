@@ -35,7 +35,7 @@
     <string name="no_app_to_open_link">Keine App zum Öffnen dieses Links gefunden.</string>
     <string name="report_sending">Bericht wird gesendet … das kann bis zu einer Minute dauern.</string>
     <string name="report_sent">Bericht gesendet. Danke!</string>
-    <string name="report_rate_limited">Du kannst alle 24 Stunden einen Bericht senden und hast vor Kurzem schon einen gesendet. Danke!</string>
+    <string name="report_rate_limited">Du kannst alle 24 Stunden bis zu zwei Berichte senden und hast schon zwei gesendet. Danke!</string>
     <string name="report_rate_limited_network">Von deinem Netzwerk wurde kürzlich bereits ein Bericht gesendet. Bitte versuche es später erneut. Danke!</string>
     <string name="report_failed">Der Bericht konnte nicht gesendet werden. Prüfe deine Internetverbindung und versuche es erneut.</string>
     <string name="report_busy">Heute sind zu viele Berichte eingegangen. Bitte versuche es morgen erneut. Danke!</string>

@@ -125,7 +125,7 @@ Node.js server that forwards it to the maintainer by email and **stores nothing*
 reviews each report and adds the phone to the website's table. The website itself isn't part of this
 repository.
 
-The app allows one report every 24 hours, and the server enforces the same limit per IP address
+The app allows up to two reports every 24 hours, and the server enforces the same limit per IP address
 (it keeps only a keyed hash of the IP in memory, never the IP itself).
 
 The URLs are set in `REPORT_SERVER_URL` and `WEBSITE_URL` (`app/build.gradle.kts`). If you fork the
