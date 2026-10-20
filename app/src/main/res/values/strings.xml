@@ -23,6 +23,8 @@
     <string name="contribute_title">Contribute to the database</string>
     <string name="contribute_text">With your report, you\'re helping the developer to build a database at the %1$s that will help other audiophiles to identify which phones offer native bit-perfect support before they make a purchase.\n\nRemember, native Bit-Perfect support is the future.\n\nNote: This is an anonymous report: it doesn\'t include your name, your email or anything that identifies you. When you press \"Send report\", you can review the information before submitting.</string>
     <string name="contribute_link">application\'s website</string>
+    <string name="contribute_needs_dac">To send a report from this phone, connect a USB DAC first.</string>
+    <string name="app_version">Version %1$s</string>
     <string name="report_published_title">This will be published in the website\'s table:</string>
     <string name="report_name_note">If your phone reports an internal model code, it\'s published under its commercial name.</string>
     <string name="field_model">Phone model</string>
@@ -66,6 +68,8 @@
     <string name="h_dac_dependent">Whatever the DAC supports</string>
     <string name="bp_confirmed_res">Android offers bit-perfect mode for the connected DAC up to %1$s/%2$d bits.</string>
     <string name="bp_confirmed">Android offers bit-perfect mode for the connected DAC.</string>
+    <string name="bp_dsd">DSD: up to %1$s through bit-perfect, if the DAC supports DSD.</string>
+    <string name="bp_dsd_none">DSD: not available through bit-perfect with this DAC. DSD files will be decoded to PCM before reaching the DAC.</string>
     <string name="bp_declared_not_this_dac">The manufacturer declares bit-perfect, but Android doesn\'t offer it for the connected DAC. It may depend on the DAC; try another model.</string>
     <string name="bp_no_with_dac">With the DAC connected, Android doesn\'t offer any bit-perfect mode.</string>
     <string name="no_usb_host">The phone doesn\'t declare USB host support, so it can\'t use a USB DAC.</string>
@@ -73,7 +77,7 @@
     <string name="bp_probable">The configuration declares AUDIO_OUTPUT_FLAG_BIT_PERFECT (%1$s), but it couldn\'t be checked which output it goes to. Connect a DAC to confirm it.</string>
     <string name="bp_not_declared">The manufacturer\'s audio configuration was read and no output declares AUDIO_OUTPUT_FLAG_BIT_PERFECT.</string>
     <string name="aidl_missing_note">Also, the AIDL audio HAL, which bit-perfect requires, was not found.</string>
-    <string name="bp_cannot_know">This phone doesn\'t allow reading its audio configuration, and Android only reports bit-perfect with a USB DAC connected.</string>
+    <string name="bp_cannot_know">This phone cannot confirm bit-perfect support until a USB DAC is connected. Please connect a USB DAC to get the confirmation and to be able to send the report to the developer.</string>
     <string name="hires_dac">Maximum resolution Android accepts with the connected DAC.</string>
     <string name="hires_declared">This is the maximum resolution the audio configuration declares for the USB output.</string>
     <string name="hires_dynamic_extra">The USB output is also dynamic, so with some DACs it could go higher.</string>

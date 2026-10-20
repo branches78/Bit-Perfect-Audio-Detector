@@ -21,6 +21,8 @@
     <string name="contribute_title">데이터베이스에 기여하기</string>
     <string name="contribute_text">보내 주신 보고서는 개발자가 %1$s에 데이터베이스를 구축하는 데 도움이 되며, 이 데이터베이스는 다른 오디오 애호가들이 구매 전에 어떤 휴대폰이 네이티브 bit-perfect를 지원하는지 확인하는 데 도움이 됩니다.\n\n기억하세요, 네이티브 Bit-Perfect 지원이 미래입니다.\n\n참고: 이 보고서는 익명입니다. 이름, 이메일 등 사용자를 식별할 수 있는 정보는 포함되지 않습니다. \"보고서 보내기\"를 탭하면 보내기 전에 정보를 확인할 수 있습니다.</string>
     <string name="contribute_link">앱 웹사이트</string>
+    <string name="contribute_needs_dac">이 휴대폰에서 보고서를 보내려면 먼저 USB DAC를 연결하세요.</string>
+    <string name="app_version">버전 %1$s</string>
     <string name="report_published_title">다음 내용이 웹사이트 표에 게시됩니다:</string>
     <string name="report_name_note">휴대폰이 내부 모델 코드를 보고하면 상품명으로 게시됩니다.</string>
     <string name="field_model">휴대폰 모델</string>
@@ -64,6 +66,8 @@
     <string name="h_dac_dependent">DAC가 지원하는 만큼</string>
     <string name="bp_confirmed_res">Android는 연결된 DAC에 대해 최대 %1$s/%2$d비트까지 bit-perfect 모드를 제공합니다.</string>
     <string name="bp_confirmed">Android는 연결된 DAC에 대해 bit-perfect 모드를 제공합니다.</string>
+    <string name="bp_dsd">DSD: DAC가 DSD를 지원하면 bit-perfect로 최대 %1$s까지.</string>
+    <string name="bp_dsd_none">DSD: 이 DAC에서는 bit-perfect로 사용할 수 없습니다. DSD 파일은 DAC에 도달하기 전에 PCM으로 디코딩됩니다.</string>
     <string name="bp_declared_not_this_dac">제조사는 bit-perfect를 선언하지만 Android는 연결된 DAC에 이를 제공하지 않습니다. DAC에 따라 다를 수 있으니 다른 모델을 사용해 보세요.</string>
     <string name="bp_no_with_dac">DAC가 연결된 상태에서 Android는 bit-perfect 모드를 제공하지 않습니다.</string>
     <string name="no_usb_host">휴대폰이 USB 호스트 지원을 선언하지 않아 USB DAC를 사용할 수 없습니다.</string>
@@ -71,7 +75,7 @@
     <string name="bp_probable">구성에서 AUDIO_OUTPUT_FLAG_BIT_PERFECT를 선언하지만(%1$s) 어느 출력으로 연결되는지 확인할 수 없습니다. 확인하려면 DAC를 연결하세요.</string>
     <string name="bp_not_declared">제조사의 오디오 구성을 읽었지만 AUDIO_OUTPUT_FLAG_BIT_PERFECT를 선언한 출력이 없습니다.</string>
     <string name="aidl_missing_note">또한 bit-perfect에 필요한 AIDL 오디오 HAL을 찾을 수 없습니다.</string>
-    <string name="bp_cannot_know">이 휴대폰은 오디오 구성을 읽을 수 없으며, Android는 USB DAC가 연결된 경우에만 bit-perfect 여부를 알려 줍니다.</string>
+    <string name="bp_cannot_know">이 휴대폰은 USB DAC를 연결해야 bit-perfect 지원을 확인할 수 있습니다. 확인 결과를 얻고 개발자에게 보고서를 보내려면 USB DAC를 연결하세요.</string>
     <string name="hires_dac">연결된 DAC에서 Android가 허용하는 최대 해상도입니다.</string>
     <string name="hires_declared">오디오 구성이 USB 출력에 대해 선언한 최대 해상도입니다.</string>
     <string name="hires_dynamic_extra">USB 출력은 동적이기도 하므로 일부 DAC에서는 더 높아질 수 있습니다.</string>

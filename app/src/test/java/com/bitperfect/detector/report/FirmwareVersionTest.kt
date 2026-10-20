@@ -1,5 +1,6 @@
 package com.bitperfect.detector.report
 
+import com.bitperfect.detector.audio.dopDsd
 import com.bitperfect.detector.audio.uacVersion
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -44,5 +45,14 @@ class FirmwareVersionTest {
         assertEquals("UAC2", uacVersion(0x20))
         assertEquals("UAC3", uacVersion(0x30))
         assertNull(uacVersion(0xFF))
+    }
+
+    @Test
+    fun dsdOverDopNeedsItsExactBitPerfectRates() {
+        assertEquals(64, dopDsd(listOf(44_100, 96_000, 176_400, 192_000)))
+        assertEquals(128, dopDsd(listOf(176_400, 352_800, 384_000)))
+        assertEquals(256, dopDsd(listOf(705_600)))
+        // 192 kHz isn't 176.4 kHz: no DoP.
+        assertEquals(0, dopDsd(listOf(48_000, 96_000, 192_000)))
     }
 }

@@ -88,7 +88,11 @@ Cases where reading without a DAC may fail:
 - Phones with an AIDL HAL that build the configuration in code instead of XML.
   The app shows this in the technical details of the "Send report" dialog so it can be checked.
 
-With a DAC connected, the result comes from Android and is definitive.
+With a DAC connected, the result comes from Android and is definitive. The "USB DAC" card shows
+the DAC's name with its USB Audio Class (read from UsbManager's device list, with no permission),
+and, when bit-perfect is confirmed, the "Bit-Perfect support" card adds whether DSD can be played: it travels as DoP (DSD packed
+into PCM), so it needs bit-perfect at exactly 176.4 kHz (DSD64), 352.8 kHz (DSD128) or 705.6 kHz
+(DSD256) with 24 bits or more.
 
 ### "Compatible apps" card
 

@@ -22,6 +22,8 @@
     <string name="contribute_title">Veritabanına katkıda bulunun</string>
     <string name="contribute_text">Raporunuzla, geliştiricinin %1$s üzerinde, diğer odyofillerin satın almadan önce hangi telefonların yerel bit-perfect desteği sunduğunu öğrenmelerine yardımcı olacak bir veritabanı oluşturmasına yardımcı oluyorsunuz.\n\nUnutmayın, yerel Bit-Perfect desteği gelecektir.\n\nNot: Bu rapor anonimdir: adınızı, e-posta adresinizi veya sizi tanımlayan herhangi bir şeyi içermez. \"Rapor gönder\"e dokunduğunuzda, göndermeden önce bilgileri inceleyebilirsiniz.</string>
     <string name="contribute_link">uygulamanın web sitesi</string>
+    <string name="contribute_needs_dac">Bu telefondan rapor göndermek için önce bir USB DAC bağlayın.</string>
+    <string name="app_version">Sürüm %1$s</string>
     <string name="report_published_title">Bu bilgiler web sitesindeki tabloda yayınlanacak:</string>
     <string name="report_name_note">Telefonunuz dahili bir model kodu bildiriyorsa, ticari adıyla yayınlanır.</string>
     <string name="field_model">Telefon modeli</string>
@@ -65,6 +67,8 @@
     <string name="h_dac_dependent">DAC\'ın desteklediği kadar</string>
     <string name="bp_confirmed_res">Android, bağlı DAC için %1$s/%2$d bit\'e kadar bit-perfect modu sunuyor.</string>
     <string name="bp_confirmed">Android, bağlı DAC için bit-perfect modu sunuyor.</string>
+    <string name="bp_dsd">DSD: DAC DSD\'yi destekliyorsa bit-perfect üzerinden %1$s\'e kadar.</string>
+    <string name="bp_dsd_none">DSD: bu DAC ile bit-perfect üzerinden kullanılamıyor. DSD dosyaları DAC\'a ulaşmadan önce PCM\'e çözülecek.</string>
     <string name="bp_declared_not_this_dac">Üretici bit-perfect beyan ediyor, ancak Android bunu bağlı DAC için sunmuyor. DAC\'a bağlı olabilir; başka bir model deneyin.</string>
     <string name="bp_no_with_dac">DAC bağlıyken Android hiçbir bit-perfect modu sunmuyor.</string>
     <string name="no_usb_host">Telefon USB host desteği beyan etmiyor, bu yüzden USB DAC kullanamaz.</string>
@@ -72,7 +76,7 @@
     <string name="bp_probable">Yapılandırma AUDIO_OUTPUT_FLAG_BIT_PERFECT beyan ediyor (%1$s), ancak hangi çıkışa gittiği doğrulanamadı. Doğrulamak için bir DAC bağlayın.</string>
     <string name="bp_not_declared">Üreticinin ses yapılandırması okundu ve hiçbir çıkış AUDIO_OUTPUT_FLAG_BIT_PERFECT beyan etmiyor.</string>
     <string name="aidl_missing_note">Ayrıca bit-perfect için gerekli olan AIDL ses HAL\'ı bulunamadı.</string>
-    <string name="bp_cannot_know">Bu telefon ses yapılandırmasının okunmasına izin vermiyor ve Android bit-perfect bilgisini yalnızca USB DAC bağlıyken veriyor.</string>
+    <string name="bp_cannot_know">Bu telefon, bir USB DAC bağlanana kadar bit-perfect desteğini doğrulayamaz. Doğrulamayı almak ve raporu geliştiriciye gönderebilmek için lütfen bir USB DAC bağlayın.</string>
     <string name="hires_dac">Android\'in bağlı DAC ile kabul ettiği en yüksek çözünürlük.</string>
     <string name="hires_declared">Bu, ses yapılandırmasının USB çıkışı için beyan ettiği en yüksek çözünürlüktür.</string>
     <string name="hires_dynamic_extra">USB çıkışı aynı zamanda dinamik olduğundan bazı DAC\'larla daha yükseğe çıkabilir.</string>

@@ -114,6 +114,7 @@ class AudioRuntimeProbe(private val context: Context) {
             bitPerfectSupported = bitPerfectAttrs.isNotEmpty(),
             bitPerfectMaxRate = bitPerfectAttrs.maxOfOrNull { it.format.sampleRate } ?: 0,
             bitPerfectMaxBits = bitPerfectAttrs.maxOfOrNull { bitDepth(it.format.encoding) } ?: 0,
+            dopDsd = dopDsd(bitPerfectAttrs.filter { bitDepth(it.format.encoding) >= 24 }.map { it.format.sampleRate }),
             preferred = preferred?.let {
                 PreferredMixer(it.mixerBehavior, it.format.sampleRate, bitDepth(it.format.encoding))
             },
@@ -190,6 +191,8 @@ data class OutputDevice(
     val bitPerfectSupported: Boolean,
     val bitPerfectMaxRate: Int,
     val bitPerfectMaxBits: Int,
+    /** DSD over DoP through bit-perfect: 64, 128 or 256 (DSD64…), or 0 if it isn't possible. */
+    val dopDsd: Int = 0,
     val preferred: PreferredMixer?,
 ) {
     /** The name shown to the user: without the "USB-Audio - " prefix of some phones. */
@@ -212,6 +215,17 @@ fun uacVersion(protocol: Int): String? = when (protocol) {
     0x20 -> "UAC2"
     0x30 -> "UAC3"
     else -> null
+}
+
+/**
+ * Highest DSD rate that DoP (DSD packed into 24-bit PCM) can carry through bit-perfect at these
+ * 24-bit-or-more [rates]: DSD64 needs 176.4 kHz, DSD128 352.8 kHz and DSD256 705.6 kHz. 0 if none.
+ */
+fun dopDsd(rates: List<Int>): Int = when {
+    705_600 in rates -> 256
+    352_800 in rates -> 128
+    176_400 in rates -> 64
+    else -> 0
 }
 
 /** Mixer attributes an app chose for a device (AudioManager.getPreferredMixerAttributes). */

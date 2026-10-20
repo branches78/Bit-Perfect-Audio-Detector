@@ -43,13 +43,15 @@ object VerdictEngine {
         if (dacs.isNotEmpty()) {
             val ok = dacs.filter { it.bitPerfectSupported }
             if (ok.isNotEmpty()) {
+                // Only with bit-perfect: DSD has no other way to reach the DAC.
+                val dsd = dsdNote(c, ok.maxOf { it.dopDsd })
                 val best = ok.maxBy { it.bitPerfectMaxRate }
                 val detail = if (best.bitPerfectMaxRate > 0) {
                     c.getString(R.string.bp_confirmed_res, khz(c, best.bitPerfectMaxRate), best.bitPerfectMaxBits)
                 } else {
                     c.getString(R.string.bp_confirmed)
                 }
-                return Verdict(Level.YES, c.getString(R.string.h_yes_confirmed), detail)
+                return Verdict(Level.YES, c.getString(R.string.h_yes_confirmed), "$detail\n\n$dsd")
             }
             return if (declared.isNotEmpty()) {
                 Verdict(
@@ -84,6 +86,10 @@ object VerdictEngine {
         }
     }
 
+    /** DSD through bit-perfect: it travels as DoP (DSD packed into PCM), up to DSD[dop] (0 = not possible). */
+    private fun dsdNote(c: Context, dop: Int) =
+        if (dop > 0) c.getString(R.string.bp_dsd, "DSD$dop") else c.getString(R.string.bp_dsd_none)
+
     private fun aidlNote(c: Context, policy: PolicyScanResult) = when (policy.aidlAudioHal) {
         false -> " " + c.getString(R.string.aidl_missing_note)
         else -> ""
@@ -107,7 +113,9 @@ object VerdictEngine {
         if (dacs.isEmpty()) {
             return Verdict(Level.NO, c.getString(R.string.h_not_connected), "")
         }
-        val names = dacs.map { it.displayName }.filter { it.isNotBlank() }.joinToString()
+        // With its USB Audio Class when it's known: "HiBy FC3 (UAC2)".
+        val names = dacs.filter { it.displayName.isNotBlank() }
+            .joinToString { d -> d.uac?.let { "${d.displayName} ($it)" } ?: d.displayName }
         val headline = if (names.isNotEmpty()) {
             c.getString(R.string.h_connected_dac, names)
         } else {

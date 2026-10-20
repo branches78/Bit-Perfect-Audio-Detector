@@ -22,6 +22,8 @@
     <string name="contribute_title">डेटाबेस में योगदान दें</string>
     <string name="contribute_text">आपकी रिपोर्ट से डेवलपर को %1$s पर एक डेटाबेस बनाने में मदद मिलती है, जो दूसरे ऑडियोफ़ाइल्स को खरीदने से पहले यह पहचानने में मदद करेगा कि किन फ़ोन में नेटिव bit-perfect सपोर्ट है।\n\nयाद रखें, नेटिव Bit-Perfect सपोर्ट ही भविष्य है।\n\nनोट: यह रिपोर्ट गुमनाम है: इसमें आपका नाम, ईमेल या आपकी पहचान बताने वाली कोई भी चीज़ शामिल नहीं होती। \"रिपोर्ट भेजें\" दबाने पर, भेजने से पहले आप जानकारी देख सकते हैं।</string>
     <string name="contribute_link">ऐप की वेबसाइट</string>
+    <string name="contribute_needs_dac">इस फ़ोन से रिपोर्ट भेजने के लिए पहले एक USB DAC कनेक्ट करें।</string>
+    <string name="app_version">वर्ज़न %1$s</string>
     <string name="report_published_title">यह वेबसाइट की तालिका में प्रकाशित होगा:</string>
     <string name="report_name_note">अगर आपका फ़ोन कोई आंतरिक मॉडल कोड बताता है, तो उसे उसके व्यावसायिक नाम से प्रकाशित किया जाता है।</string>
     <string name="field_model">फ़ोन मॉडल</string>
@@ -65,6 +67,8 @@
     <string name="h_dac_dependent">जितना DAC सपोर्ट करे</string>
     <string name="bp_confirmed_res">Android कनेक्ट किए गए DAC के लिए %1$s/%2$d बिट तक bit-perfect मोड देता है।</string>
     <string name="bp_confirmed">Android कनेक्ट किए गए DAC के लिए bit-perfect मोड देता है।</string>
+    <string name="bp_dsd">DSD: अगर DAC DSD सपोर्ट करता है, तो bit-perfect के ज़रिए %1$s तक।</string>
+    <string name="bp_dsd_none">DSD: इस DAC के साथ bit-perfect के ज़रिए उपलब्ध नहीं। DSD फ़ाइलें DAC तक पहुँचने से पहले PCM में डिकोड की जाएँगी।</string>
     <string name="bp_declared_not_this_dac">निर्माता bit-perfect की घोषणा करता है, लेकिन Android इसे कनेक्ट किए गए DAC के लिए नहीं देता। यह DAC पर निर्भर हो सकता है; कोई दूसरा मॉडल आज़माएँ।</string>
     <string name="bp_no_with_dac">DAC कनेक्ट होने पर भी Android कोई bit-perfect मोड नहीं देता।</string>
     <string name="no_usb_host">फ़ोन USB host सपोर्ट की घोषणा नहीं करता, इसलिए यह USB DAC का उपयोग नहीं कर सकता।</string>
@@ -72,7 +76,7 @@
     <string name="bp_probable">कॉन्फ़िगरेशन AUDIO_OUTPUT_FLAG_BIT_PERFECT की घोषणा करता है (%1$s), लेकिन यह जाँचा नहीं जा सका कि यह किस आउटपुट पर जाता है। पुष्टि के लिए एक DAC कनेक्ट करें।</string>
     <string name="bp_not_declared">निर्माता का ऑडियो कॉन्फ़िगरेशन पढ़ा गया और कोई भी आउटपुट AUDIO_OUTPUT_FLAG_BIT_PERFECT की घोषणा नहीं करता।</string>
     <string name="aidl_missing_note">साथ ही, AIDL ऑडियो HAL नहीं मिला, जो bit-perfect के लिए ज़रूरी है।</string>
-    <string name="bp_cannot_know">यह फ़ोन अपना ऑडियो कॉन्फ़िगरेशन पढ़ने नहीं देता, और Android केवल USB DAC कनेक्ट होने पर ही bit-perfect की जानकारी देता है।</string>
+    <string name="bp_cannot_know">यह फ़ोन USB DAC कनेक्ट होने तक bit-perfect सपोर्ट की पुष्टि नहीं कर सकता। पुष्टि पाने और डेवलपर को रिपोर्ट भेज पाने के लिए कृपया एक USB DAC कनेक्ट करें।</string>
     <string name="hires_dac">कनेक्ट किए गए DAC के साथ Android द्वारा स्वीकार किया जाने वाला अधिकतम रिज़ॉल्यूशन।</string>
     <string name="hires_declared">यह वह अधिकतम रिज़ॉल्यूशन है जिसकी घोषणा ऑडियो कॉन्फ़िगरेशन USB आउटपुट के लिए करता है।</string>
     <string name="hires_dynamic_extra">USB आउटपुट डायनेमिक भी है, इसलिए कुछ DAC के साथ यह इससे ऊपर जा सकता है।</string>

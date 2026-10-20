@@ -163,12 +163,16 @@ fun MainScreen(
                 // Google Play's test devices and emulators can't (TestDevice).
                 if (canReport) {
                     item {
-                        ContributeCard(sending = sending, onSend = { onOpenReport(); showDetails = true })
+                        // Phones that can only confirm bit-perfect with a DAC (unreadable configuration)
+                        // send their report once one is connected.
+                        val needsDac = report.bitPerfect.level == Level.UNKNOWN && report.runtime.usbDacs.isEmpty()
+                        ContributeCard(sending = sending, needsDac = needsDac, onSend = { onOpenReport(); showDetails = true })
                     }
                 }
                 if (ForumDraft.applies(report)) {
                     item { AskManufacturerCard(report) }
                 }
+                item { AppVersion() }
             }
         }
     }
@@ -176,7 +180,7 @@ fun MainScreen(
 
 /** Invitation to send the report, with a link to the website (where the phone database is). */
 @Composable
-private fun ContributeCard(sending: Boolean, onSend: () -> Unit) {
+private fun ContributeCard(sending: Boolean, needsDac: Boolean, onSend: () -> Unit) {
     val context = LocalContext.current
     val site = BuildConfig.WEBSITE_URL
     ExpandableCard(
@@ -201,12 +205,32 @@ private fun ContributeCard(sending: Boolean, onSend: () -> Unit) {
             },
             style = MaterialTheme.typography.bodyMedium,
         )
+        if (needsDac) {
+            Text(
+                stringResource(R.string.contribute_needs_dac),
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.padding(top = 8.dp),
+            )
+        }
         Box(Modifier.fillMaxWidth().padding(top = 8.dp), contentAlignment = Alignment.Center) {
-            Button(onClick = onSend, enabled = !sending) {
+            Button(onClick = onSend, enabled = !sending && !needsDac) {
                 Text(stringResource(R.string.action_send_report))
             }
         }
     }
+}
+
+/** The app's version, centered under the cards. */
+@Composable
+private fun AppVersion() {
+    Text(
+        stringResource(R.string.app_version, BuildConfig.VERSION_NAME),
+        style = MaterialTheme.typography.labelSmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        textAlign = TextAlign.Center,
+        modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+    )
 }
 
 /**

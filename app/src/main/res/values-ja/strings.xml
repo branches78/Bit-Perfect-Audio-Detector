@@ -21,6 +21,8 @@
     <string name="contribute_title">データベースに協力する</string>
     <string name="contribute_text">あなたのレポートは、開発者が%1$sにデータベースを作るのに役立ちます。このデータベースは、ほかのオーディオファンが購入前にネイティブのbit-perfectに対応しているスマートフォンを見分けるのに役立ちます。\n\nネイティブのBit-Perfect対応こそが未来です。\n\n注：このレポートは匿名です。お名前、メールアドレスなど、お客様を特定できる情報は含まれません。「レポートを送信」をタップすると、送信前に内容を確認できます。</string>
     <string name="contribute_link">アプリのウェブサイト</string>
+    <string name="contribute_needs_dac">このスマートフォンからレポートを送信するには、まずUSB DACを接続してください。</string>
+    <string name="app_version">バージョン %1$s</string>
     <string name="report_published_title">次の内容がウェブサイトの表に掲載されます：</string>
     <string name="report_name_note">スマートフォンが内部の型番コードを報告する場合は、製品名で掲載されます。</string>
     <string name="field_model">機種</string>
@@ -64,6 +66,8 @@
     <string name="h_dac_dependent">DACの対応範囲まで</string>
     <string name="bp_confirmed_res">Androidは接続されたDACに対して最大%1$s/%2$dビットのbit-perfectモードを提供しています。</string>
     <string name="bp_confirmed">Androidは接続されたDACに対してbit-perfectモードを提供しています。</string>
+    <string name="bp_dsd">DSD：DACがDSDに対応していれば、bit-perfectで最大%1$sまで。</string>
+    <string name="bp_dsd_none">DSD：このDACではbit-perfectで利用できません。DSDファイルはDACに届く前にPCMにデコードされます。</string>
     <string name="bp_declared_not_this_dac">メーカーはbit-perfectを宣言していますが、Androidは接続されたDACに対して提供していません。DACによって異なる場合があるため、別のモデルをお試しください。</string>
     <string name="bp_no_with_dac">DACを接続しても、Androidはbit-perfectモードを提供していません。</string>
     <string name="no_usb_host">このスマートフォンはUSBホストに対応していないため、USB DACを使用できません。</string>
@@ -71,7 +75,7 @@
     <string name="bp_probable">設定でAUDIO_OUTPUT_FLAG_BIT_PERFECTが宣言されていますが（%1$s）、どの出力に割り当てられているか確認できませんでした。確認するにはDACを接続してください。</string>
     <string name="bp_not_declared">メーカーのオーディオ設定を読み取りましたが、AUDIO_OUTPUT_FLAG_BIT_PERFECTを宣言している出力はありません。</string>
     <string name="aidl_missing_note">また、bit-perfectに必要なAIDLオーディオHALが見つかりませんでした。</string>
-    <string name="bp_cannot_know">このスマートフォンはオーディオ設定を読み取れません。また、AndroidはUSB DACが接続されている場合にのみbit-perfectを報告します。</string>
+    <string name="bp_cannot_know">このスマートフォンは、USB DACを接続するまでbit-perfect対応を確認できません。確認結果を得て開発者にレポートを送信するには、USB DACを接続してください。</string>
     <string name="hires_dac">接続されたDACでAndroidが受け付ける最大解像度です。</string>
     <string name="hires_declared">オーディオ設定がUSB出力に対して宣言している最大解像度です。</string>
     <string name="hires_dynamic_extra">USB出力は動的でもあるため、DACによってはさらに高くなる可能性があります。</string>
