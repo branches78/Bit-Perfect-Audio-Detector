@@ -90,6 +90,8 @@ class BitPerfectAppScanner(private val context: Context) {
             BitPerfectApp("Audiophile Music Player", "com.androidexpert35.audiophilemusicplayer"),
             BitPerfectApp("PureBit", "app.purebit"),
             BitPerfectApp("Omnia Music Player", "com.rhmsoft.omnia"),
+            BitPerfectApp("Audilux Music Player", "com.audilux.musicplayer.mp3player"),
+            BitPerfectApp("jetAudio Hi-Res Music Player", "com.jetappfactory.jetaudio"),
         )
 
         /** Name of the system method that turns on bit-perfect mode. */

@@ -38,6 +38,8 @@
         <package android:name="com.androidexpert35.audiophilemusicplayer" />
         <package android:name="app.purebit" />
         <package android:name="com.rhmsoft.omnia" />
+        <package android:name="com.audilux.musicplayer.mp3player" />
+        <package android:name="com.jetappfactory.jetaudio" />
     </queries>
 
     <application
