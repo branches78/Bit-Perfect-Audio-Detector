@@ -283,7 +283,9 @@ private fun InstalledApps(installed: List<BitPerfectApp>) {
 private fun SuggestedApps(installed: List<BitPerfectApp>) {
     val context = LocalContext.current
     val installedPackages = installed.map { it.packageName }.toSet()
+    // In alphabetical order, like the installed ones (BitPerfectAppScanner.scan).
     val others = BitPerfectAppScanner.SUGGESTED_APPS.filter { it.packageName !in installedPackages }
+        .sortedBy { it.name.lowercase() }
     if (others.isEmpty()) return
     // With no apps installed, the card's text already introduces this list.
     if (installed.isNotEmpty()) {
