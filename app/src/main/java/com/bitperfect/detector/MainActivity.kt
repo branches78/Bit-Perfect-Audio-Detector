@@ -44,6 +44,10 @@ class MainActivity : ComponentActivity() {
     /** Google Play's test devices and emulators don't offer to send a report. */
     private var canReport = true
 
+    /** This phone already sent [MAX_REPORTS] reports in the last 24 hours; "Send report" waits. */
+    private var rateLimited by mutableStateOf(false)
+    private val rateLimitEnded = Runnable { updateRateLimit() }
+
     /** A full scan (policy and apps) is running or queued; "Analyze again" waits for it. */
     private var scanning by mutableStateOf(false)
     private var policy: PolicyScanResult? = null
@@ -81,6 +85,7 @@ class MainActivity : ComponentActivity() {
                     scanning = scanning,
                     canReport = canReport,
                     sending = sending,
+                    rateLimited = rateLimited,
                     onSend = ::sendReport,
                     // While the user reads the send dialog, the report server wakes up.
                     onOpenReport = { lifecycleScope.launch { ReportSender.wakeUpServer() } },
@@ -94,12 +99,14 @@ class MainActivity : ComponentActivity() {
         super.onStart()
         audioManager.registerAudioDeviceCallback(deviceCallback, mainHandler)
         audioManager.addOnPreferredMixerAttributesChangedListener(mainExecutor, mixerListener)
+        updateRateLimit()
         refresh()
     }
 
     override fun onStop() {
         audioManager.unregisterAudioDeviceCallback(deviceCallback)
         audioManager.removeOnPreferredMixerAttributesChangedListener(mixerListener)
+        mainHandler.removeCallbacks(rateLimitEnded)
         super.onStop()
     }
 
@@ -134,9 +141,9 @@ class MainActivity : ComponentActivity() {
         if (sending || !canReport) return
         // At most two reports every 24 hours; the server has the same per-IP limit as a backup.
         val prefs = getSharedPreferences("reports", MODE_PRIVATE)
-        val now = System.currentTimeMillis()
-        val recent = sentTimes(prefs).filter { now - it in 0 until REPORT_INTERVAL_MS }
+        val recent = recentSentTimes(prefs)
         if (recent.size >= MAX_REPORTS) {
+            updateRateLimit()
             Toast.makeText(this, R.string.report_rate_limited, Toast.LENGTH_LONG).show()
             return
         }
@@ -147,6 +154,7 @@ class MainActivity : ComponentActivity() {
             if (result == SendResult.SENT) {
                 val times = (recent + System.currentTimeMillis()).takeLast(MAX_REPORTS)
                 prefs.edit().putString(KEY_SENT_AT, times.joinToString(",")).remove(KEY_LAST_SENT).apply()
+                updateRateLimit()
             }
             val message = when (result) {
                 SendResult.SENT -> R.string.report_sent
@@ -158,6 +166,27 @@ class MainActivity : ComponentActivity() {
             sending = false
             Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
         }
+    }
+
+    /**
+     * Disables "Send report" while this phone has used up its reports, and enables it again when
+     * the oldest of them is 24 hours old. Also run on every onStart, since the handler's clock
+     * stops while the phone sleeps.
+     */
+    private fun updateRateLimit() {
+        mainHandler.removeCallbacks(rateLimitEnded)
+        val recent = recentSentTimes(getSharedPreferences("reports", MODE_PRIVATE))
+        rateLimited = recent.size >= MAX_REPORTS
+        if (rateLimited) {
+            val wait = recent.min() + REPORT_INTERVAL_MS - System.currentTimeMillis()
+            mainHandler.postDelayed(rateLimitEnded, wait.coerceAtLeast(0) + 1000)
+        }
+    }
+
+    /** The reports this phone sent in the last 24 hours, in milliseconds. */
+    private fun recentSentTimes(prefs: SharedPreferences): List<Long> {
+        val now = System.currentTimeMillis()
+        return sentTimes(prefs).filter { now - it in 0 until REPORT_INTERVAL_MS }
     }
 
     /** When this phone sent its latest reports (up to [MAX_REPORTS]), in milliseconds. */

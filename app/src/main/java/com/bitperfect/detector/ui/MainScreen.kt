@@ -102,6 +102,7 @@ fun MainScreen(
     scanning: Boolean,
     canReport: Boolean,
     sending: Boolean,
+    rateLimited: Boolean,
     onSend: () -> Unit,
     onOpenReport: () -> Unit,
 ) {
@@ -166,7 +167,12 @@ fun MainScreen(
                         // Phones that can only confirm bit-perfect with a DAC (unreadable configuration)
                         // send their report once one is connected.
                         val needsDac = report.bitPerfect.level == Level.UNKNOWN && report.runtime.usbDacs.isEmpty()
-                        ContributeCard(sending = sending, needsDac = needsDac, onSend = { onOpenReport(); showDetails = true })
+                        ContributeCard(
+                            sending = sending,
+                            needsDac = needsDac,
+                            rateLimited = rateLimited,
+                            onSend = { onOpenReport(); showDetails = true },
+                        )
                     }
                 }
                 if (ForumDraft.applies(report)) {
@@ -180,7 +186,7 @@ fun MainScreen(
 
 /** Invitation to send the report, with a link to the website (where the phone database is). */
 @Composable
-private fun ContributeCard(sending: Boolean, needsDac: Boolean, onSend: () -> Unit) {
+private fun ContributeCard(sending: Boolean, needsDac: Boolean, rateLimited: Boolean, onSend: () -> Unit) {
     val context = LocalContext.current
     val site = BuildConfig.WEBSITE_URL
     ExpandableCard(
@@ -205,16 +211,22 @@ private fun ContributeCard(sending: Boolean, needsDac: Boolean, onSend: () -> Un
             },
             style = MaterialTheme.typography.bodyMedium,
         )
-        if (needsDac) {
+        // The limit is the more useful note: connecting a DAC wouldn't enable the button yet.
+        val note = when {
+            rateLimited -> R.string.report_rate_limited
+            needsDac -> R.string.contribute_needs_dac
+            else -> null
+        }
+        if (note != null) {
             Text(
-                stringResource(R.string.contribute_needs_dac),
+                stringResource(note),
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(top = 8.dp),
             )
         }
         Box(Modifier.fillMaxWidth().padding(top = 8.dp), contentAlignment = Alignment.Center) {
-            Button(onClick = onSend, enabled = !sending && !needsDac) {
+            Button(onClick = onSend, enabled = !sending && !needsDac && !rateLimited) {
                 Text(stringResource(R.string.action_send_report))
             }
         }
