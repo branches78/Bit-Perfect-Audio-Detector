@@ -93,6 +93,7 @@ class BitPerfectAppScanner(private val context: Context) {
             BitPerfectApp("Audilux Music Player", "com.audilux.musicplayer.mp3player"),
             BitPerfectApp("jetAudio Hi-Res Music Player", "com.jetappfactory.jetaudio"),
             BitPerfectApp("LastWave", "com.lastwave.app", website = "https://lastwave.app/"),
+            BitPerfectApp("Mornye", "com.zarz.mornye", website = "https://mornye.com/"),
         )
 
         /** Name of the system method that turns on bit-perfect mode. */

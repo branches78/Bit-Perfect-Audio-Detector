@@ -42,6 +42,7 @@
         <package android:name="com.audilux.musicplayer.mp3player" />
         <package android:name="com.jetappfactory.jetaudio" />
         <package android:name="com.lastwave.app" />
+        <package android:name="com.zarz.mornye" />
     </queries>
 
     <application
