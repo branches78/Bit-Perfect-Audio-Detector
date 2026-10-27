@@ -43,6 +43,7 @@
         <package android:name="com.jetappfactory.jetaudio" />
         <package android:name="com.lastwave.app" />
         <package android:name="com.zarz.mornye" />
+        <package android:name="chromahub.rhythm.play" />
     </queries>
 
     <application
