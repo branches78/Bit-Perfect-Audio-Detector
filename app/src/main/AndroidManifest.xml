@@ -44,6 +44,7 @@
         <package android:name="com.lastwave.app" />
         <package android:name="com.zarz.mornye" />
         <package android:name="chromahub.rhythm.play" />
+        <package android:name="com.stash.app" />
     </queries>
 
     <application
