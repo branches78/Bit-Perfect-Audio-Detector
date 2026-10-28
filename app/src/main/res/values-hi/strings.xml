@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_send_report">रिपोर्ट भेजें</string>
-    <string name="action_help">सहायता</string>
+    <string name="card_about">परिचय</string>
+    <string name="about_headline">Bit-perfect क्या है और नतीजे कैसे पढ़ें</string>
     <string name="action_refresh">फिर से विश्लेषण करें</string>
     <string name="card_usb_dac">USB DAC</string>
     <string name="card_hi_res">Hi-Res ऑडियो</string>
@@ -15,7 +16,6 @@
     <string name="bp_apps_intro">आपके फ़ोन में इंस्टॉल ये ऐप्स Android का नेटिव bit-perfect मोड इस्तेमाल करते हैं:</string>
     <string name="bp_apps_none">कोई भी इंस्टॉल ऐप Android के नेटिव bit-perfect मोड को सपोर्ट नहीं करता, लेकिन आप ये ऐप्स देख सकते हैं:</string>
     <string name="bp_apps_others">Play Store पर उपलब्ध अन्य संगत ऐप्स:</string>
-    <string name="button_ok">ठीक है</string>
     <string name="button_cancel">रद्द करें</string>
     <string name="button_send">भेजें</string>
     <string name="details_title">रिपोर्ट का डेटा</string>

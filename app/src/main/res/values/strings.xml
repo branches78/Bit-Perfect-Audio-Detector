@@ -2,7 +2,8 @@
 <resources>
     <string name="app_name" translatable="false">Bit-Perfect Audio Detector</string>
     <string name="action_send_report">Send report</string>
-    <string name="action_help">Help</string>
+    <string name="card_about">About</string>
+    <string name="about_headline">What bit-perfect is and how to read the results</string>
     <string name="action_refresh">Analyze again</string>
     <string name="card_usb_dac">USB DAC</string>
     <string name="card_hi_res">Hi-Res Audio</string>
@@ -16,7 +17,6 @@
     <string name="bp_apps_intro">These apps installed on your phone use Android\'s native bit-perfect mode:</string>
     <string name="bp_apps_none">No installed app supports Android\'s native bit-perfect mode, but you can check out the following:</string>
     <string name="bp_apps_others">Other compatible apps available on the Play Store:</string>
-    <string name="button_ok">OK</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_send">Send</string>
     <string name="details_title">Report data</string>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_send_report">Envoyer le rapport</string>
-    <string name="action_help">Aide</string>
+    <string name="card_about">À propos</string>
+    <string name="about_headline">Ce qu\'est le bit-perfect et comment lire les résultats</string>
     <string name="action_refresh">Analyser à nouveau</string>
     <string name="card_usb_dac">DAC USB</string>
     <string name="card_hi_res">Audio Hi-Res</string>
@@ -16,7 +17,6 @@
     <string name="bp_apps_intro">Ces applications installées sur votre téléphone utilisent le mode bit-perfect natif d\'Android :</string>
     <string name="bp_apps_none">Aucune application installée ne prend en charge le mode bit-perfect natif d\'Android, mais vous pouvez découvrir celles-ci :</string>
     <string name="bp_apps_others">Autres applications compatibles disponibles sur le Play Store :</string>
-    <string name="button_ok">OK</string>
     <string name="button_cancel">Annuler</string>
     <string name="button_send">Envoyer</string>
     <string name="details_title">Données du rapport</string>

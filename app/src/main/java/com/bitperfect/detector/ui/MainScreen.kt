@@ -65,8 +65,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
@@ -107,7 +107,6 @@ fun MainScreen(
     onOpenReport: () -> Unit,
 ) {
     var showDetails by rememberSaveable { mutableStateOf(false) }
-    var showHelp by rememberSaveable { mutableStateOf(false) }
     // Title of the expanded card: only one is open at a time (ExpandableCard).
     val openCard = rememberSaveable { mutableStateOf<String?>(null) }
     if (showDetails && report != null) {
@@ -117,20 +116,11 @@ fun MainScreen(
             onDismiss = { showDetails = false },
         )
     }
-    if (showHelp && report != null) {
-        HelpDialog(onDismiss = { showHelp = false })
-    }
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Bit-Perfect Audio Detector") },
                 actions = {
-                    IconButton(onClick = { showHelp = true }, enabled = report != null) {
-                        Icon(
-                            painterResource(R.drawable.ic_help_outline),
-                            contentDescription = stringResource(R.string.action_help),
-                        )
-                    }
                     IconButton(onClick = onRefresh, enabled = !scanning) {
                         Icon(Icons.Filled.Refresh, contentDescription = stringResource(R.string.action_refresh))
                     }
@@ -178,6 +168,7 @@ fun MainScreen(
                 if (ForumDraft.applies(report)) {
                     item { AskManufacturerCard(report) }
                 }
+                item { AboutCard() }
                 item { AppVersion() }
             }
         }
@@ -499,8 +490,9 @@ private fun StatusIcon(icon: ImageVector, tint: Color) {
     }
 }
 
+/** The help texts (shared with the website), in a card under the others, above the version. */
 @Composable
-private fun HelpDialog(onDismiss: () -> Unit) {
+private fun AboutCard() {
     val context = LocalContext.current
     val sections = listOf(
         R.string.help_bp_title to stringResource(R.string.help_bp),
@@ -509,34 +501,24 @@ private fun HelpDialog(onDismiss: () -> Unit) {
         R.string.help_results_title to
             stringResource(R.string.help_no_dac) + "\n\n" + stringResource(R.string.help_dac),
     )
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = {
-            Text(stringResource(R.string.action_help), textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
-        },
-        // The text doesn't fit on screen: the dialog grows to the available height and the rest scrolls.
-        text = {
-            Column(
-                Modifier.verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(6.dp),
-            ) {
-                sections.forEachIndexed { i, (title, body) ->
-                    Text(
-                        stringResource(title),
-                        style = MaterialTheme.typography.titleSmall,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = if (i > 0) Modifier.padding(top = 10.dp) else Modifier,
-                    )
-                    Text(withLinks(body, context), style = MaterialTheme.typography.bodyMedium)
-                }
+    ExpandableCard(
+        title = stringResource(R.string.card_about),
+        headline = stringResource(R.string.about_headline),
+        icon = ImageVector.vectorResource(R.drawable.ic_help_outline),
+        tint = MaterialTheme.colorScheme.primary,
+    ) {
+        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            sections.forEachIndexed { i, (title, body) ->
+                Text(
+                    stringResource(title),
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = if (i > 0) Modifier.padding(top = 10.dp) else Modifier,
+                )
+                Text(withLinks(body, context), style = MaterialTheme.typography.bodyMedium)
             }
-        },
-        confirmButton = {
-            Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                Button(onClick = onDismiss) { Text(stringResource(R.string.button_ok)) }
-            }
-        },
-    )
+        }
+    }
 }
 
 /** Markdown-style link in the texts shared with the website: [text](https://…). */

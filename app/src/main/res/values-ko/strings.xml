@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_send_report">보고서 보내기</string>
-    <string name="action_help">도움말</string>
+    <string name="card_about">소개</string>
+    <string name="about_headline">Bit-perfect란 무엇인지, 결과 보는 방법</string>
     <string name="action_refresh">다시 분석</string>
     <string name="card_usb_dac">USB DAC</string>
     <string name="card_hi_res">하이레스 오디오</string>
@@ -14,7 +15,6 @@
     <string name="bp_apps_intro">휴대폰에 설치된 다음 앱은 Android 기본 bit-perfect 모드를 사용합니다:</string>
     <string name="bp_apps_none">Android 기본 bit-perfect 모드를 지원하는 설치된 앱이 없지만, 다음 앱을 확인해 보세요:</string>
     <string name="bp_apps_others">Play 스토어에서 받을 수 있는 기타 호환 앱:</string>
-    <string name="button_ok">확인</string>
     <string name="button_cancel">취소</string>
     <string name="button_send">보내기</string>
     <string name="details_title">보고서 데이터</string>
