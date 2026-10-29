@@ -137,7 +137,9 @@ fun MainScreen(
         CompositionLocalProvider(LocalOpenCard provides openCard) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize().padding(padding),
-                contentPadding = PaddingValues(16.dp),
+                // No top padding: the top bar already leaves room under its title, so the phone's name
+                // sits as far from it as the Android version from the first card.
+                contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 item { DeviceHeader() }
