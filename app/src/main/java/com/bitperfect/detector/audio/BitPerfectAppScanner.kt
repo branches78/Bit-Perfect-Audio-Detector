@@ -96,6 +96,8 @@ class BitPerfectAppScanner(private val context: Context) {
             BitPerfectApp("Mornye", "com.zarz.mornye", website = "https://mornye.com/"),
             BitPerfectApp("Rhythm", "chromahub.rhythm.play"),
             BitPerfectApp("Stash", "com.stash.app", website = "https://stashfm.app/"),
+            BitPerfectApp("Auris", "com.music.bitchord", website = "https://auris.shehriyar.ink/"),
+            BitPerfectApp("SpatialFlow", "com.codetrio.spatialflow", website = "https://spatialflow.vercel.app/"),
         )
 
         /** Name of the system method that turns on bit-perfect mode. */
