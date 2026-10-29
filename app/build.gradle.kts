@@ -24,8 +24,8 @@ android {
         // With minSdk 34 the app can't be installed on earlier versions.
         minSdk = 34
         targetSdk = 36
-        versionCode = 7
-        versionName = "1.1.0"
+        versionCode = 8
+        versionName = "1.2.0"
 
         // Report server (github.com/branches78/Bit-Perfect-Audio-Detector-Server) and website with the
         // phone table. Change them if you deploy your own server or use your own domain.
