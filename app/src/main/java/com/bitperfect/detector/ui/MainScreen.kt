@@ -139,8 +139,9 @@ fun MainScreen(
                 modifier = Modifier.fillMaxSize().padding(padding),
                 // No top padding: the top bar already leaves room under its title, so the phone's name
                 // sits as far from it as the Android version from the first card.
-                contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                // Tight spacing, so the collapsed cards and the version fit on one screen.
+                contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 item { DeviceHeader() }
                 item { VerdictCard(stringResource(R.string.card_usb_dac), report.usbDac) }
@@ -234,7 +235,7 @@ private fun AppVersion() {
         style = MaterialTheme.typography.labelSmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         textAlign = TextAlign.Center,
-        modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+        modifier = Modifier.fillMaxWidth(),
     )
 }
 
@@ -378,7 +379,8 @@ fun phoneName(
 @Composable
 private fun DeviceHeader() {
     Column(
-        Modifier.fillMaxWidth().padding(bottom = 4.dp),
+        // With the list's 8 dp spacing, as much room below as the top bar leaves above (about 18 dp).
+        Modifier.fillMaxWidth().padding(bottom = 10.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
