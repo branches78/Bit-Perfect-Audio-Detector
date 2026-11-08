@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
     /** Google Play's test devices and emulators don't offer to send a report. */
     private var canReport = true
 
-    /** This phone already sent [MAX_REPORTS] reports in the last 24 hours; "Send report" waits. */
+    /** This phone already sent [MAX_REPORTS] reports in the last 48 hours; "Send report" waits. */
     private var rateLimited by mutableStateOf(false)
     private val rateLimitEnded = Runnable { updateRateLimit() }
 
@@ -139,7 +139,7 @@ class MainActivity : ComponentActivity() {
     private fun sendReport() {
         val r = report ?: return
         if (sending || !canReport) return
-        // At most two reports every 24 hours; the server has the same per-IP limit as a backup.
+        // At most two reports every 48 hours; the server has the same per-IP limit as a backup.
         val prefs = getSharedPreferences("reports", MODE_PRIVATE)
         val recent = recentSentTimes(prefs)
         if (recent.size >= MAX_REPORTS) {
@@ -170,7 +170,7 @@ class MainActivity : ComponentActivity() {
 
     /**
      * Disables "Send report" while this phone has used up its reports, and enables it again when
-     * the oldest of them is 24 hours old. Also run on every onStart, since the handler's clock
+     * the oldest of them is 48 hours old. Also run on every onStart, since the handler's clock
      * stops while the phone sleeps.
      */
     private fun updateRateLimit() {
@@ -183,7 +183,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    /** The reports this phone sent in the last 24 hours, in milliseconds. */
+    /** The reports this phone sent in the last 48 hours, in milliseconds. */
     private fun recentSentTimes(prefs: SharedPreferences): List<Long> {
         val now = System.currentTimeMillis()
         return sentTimes(prefs).filter { now - it in 0 until REPORT_INTERVAL_MS }
@@ -201,6 +201,6 @@ class MainActivity : ComponentActivity() {
         const val KEY_SENT_AT = "sent_at"
         const val KEY_LAST_SENT = "last_sent_at"
         const val MAX_REPORTS = 2
-        const val REPORT_INTERVAL_MS = 24 * 3600_000L
+        const val REPORT_INTERVAL_MS = 48 * 3600_000L
     }
 }
