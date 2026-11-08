@@ -99,6 +99,7 @@ class BitPerfectAppScanner(private val context: Context) {
             BitPerfectApp("Auris", "com.music.bitchord", website = "https://auris.shehriyar.ink/"),
             BitPerfectApp("SpatialFlow", "com.codetrio.spatialflow", website = "https://spatialflow.vercel.app/"),
             BitPerfectApp("BubbleUPnP DLNA/Chromecast", "com.bubblesoft.android.bubbleupnp"),
+            BitPerfectApp("Music Player", "com.musicplayer.hifi", website = "https://github.com/branches78/Music-Player"),
         )
 
         /** Name of the system method that turns on bit-perfect mode. */

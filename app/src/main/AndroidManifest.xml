@@ -48,6 +48,7 @@
         <package android:name="com.music.bitchord" />
         <package android:name="com.codetrio.spatialflow" />
         <package android:name="com.bubblesoft.android.bubbleupnp" />
+        <package android:name="com.musicplayer.hifi" />
     </queries>
 
     <application
