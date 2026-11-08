@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -37,6 +38,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -47,7 +49,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
@@ -118,14 +119,8 @@ fun MainScreen(
     }
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Bit-Perfect Audio Detector") },
-                actions = {
-                    IconButton(onClick = onRefresh, enabled = !scanning) {
-                        Icon(Icons.Filled.Refresh, contentDescription = stringResource(R.string.action_refresh))
-                    }
-                },
-            )
+            // The refresh button lives beside the phone's name (DeviceHeader), so the title can be centered.
+            CenterAlignedTopAppBar(title = { Text("Bit-Perfect Audio Detector") })
         },
     ) { padding ->
         if (report == null) {
@@ -143,7 +138,7 @@ fun MainScreen(
                 contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                item { DeviceHeader() }
+                item { DeviceHeader(onRefresh = onRefresh, scanning = scanning) }
                 item { VerdictCard(stringResource(R.string.card_usb_dac), report.usbDac) }
                 item { VerdictCard(stringResource(R.string.card_hi_res), report.hiRes) }
                 item { VerdictCard(stringResource(R.string.card_bit_perfect), report.bitPerfect) }
@@ -377,23 +372,36 @@ fun phoneName(
 ): String = cleanPhoneName(manufacturer, model).let { (brand, shortModel) -> "$brand $shortModel" }
 
 @Composable
-private fun DeviceHeader() {
-    Column(
-        // With the list's 8 dp spacing, as much room below as the top bar leaves above (about 18 dp).
-        Modifier.fillMaxWidth().padding(bottom = 10.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(
-            phoneName(),
-            style = MaterialTheme.typography.titleLarge,
-            textAlign = TextAlign.Center,
-        )
-        Text(
-            "Android ${android.os.Build.VERSION.RELEASE} (API ${android.os.Build.VERSION.SDK_INT})",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.Center,
-        )
+private fun DeviceHeader(onRefresh: () -> Unit, scanning: Boolean) {
+    // With the list's 8 dp spacing, as much room below as the top bar leaves above (about 18 dp).
+    Box(Modifier.fillMaxWidth().padding(bottom = 10.dp)) {
+        Column(
+            // Room for the refresh button on both sides, so a long name stays centered on the screen
+            // and never runs under the button.
+            Modifier.fillMaxWidth().padding(horizontal = 40.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                phoneName(),
+                style = MaterialTheme.typography.titleLarge,
+                textAlign = TextAlign.Center,
+            )
+            Text(
+                "Android ${android.os.Build.VERSION.RELEASE} (API ${android.os.Build.VERSION.SDK_INT})",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+            )
+        }
+        IconButton(
+            onClick = onRefresh,
+            enabled = !scanning,
+            // The 48 dp touch target is wider than the 24 dp icon: shifted 12 dp so the icon lines up
+            // with the cards' right edge, and 10 dp up so it sits on the name's line (28 dp tall).
+            modifier = Modifier.align(Alignment.TopEnd).offset(x = 12.dp, y = (-10).dp),
+        ) {
+            Icon(Icons.Filled.Refresh, contentDescription = stringResource(R.string.action_refresh))
+        }
     }
 }
 
