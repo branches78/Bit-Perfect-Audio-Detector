@@ -45,6 +45,7 @@
         <package android:name="com.zarz.mornye" />
         <package android:name="chromahub.rhythm.play" />
         <package android:name="com.stash.app" />
+        <package android:name="com.dev.bitchord" />
         <package android:name="com.music.bitchord" />
         <package android:name="com.codetrio.spatialflow" />
         <package android:name="com.bubblesoft.android.bubbleupnp" />
