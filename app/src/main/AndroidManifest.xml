@@ -50,6 +50,7 @@
         <package android:name="com.codetrio.spatialflow" />
         <package android:name="com.bubblesoft.android.bubbleupnp" />
         <package android:name="com.musicplayer.hifi" />
+        <package android:name="io.github.yyan115.opentune" />
     </queries>
 
     <application

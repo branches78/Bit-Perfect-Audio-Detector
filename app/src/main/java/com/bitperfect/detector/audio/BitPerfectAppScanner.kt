@@ -101,6 +101,7 @@ class BitPerfectAppScanner(private val context: Context) {
             BitPerfectApp("SpatialFlow", "com.codetrio.spatialflow", website = "https://spatialflow.vercel.app/"),
             BitPerfectApp("BubbleUPnP DLNA/Chromecast", "com.bubblesoft.android.bubbleupnp"),
             BitPerfectApp("Music Player", "com.musicplayer.hifi", website = "https://github.com/branches78/Music-Player"),
+            BitPerfectApp("OpenTune", "io.github.yyan115.opentune", website = "https://github.com/yyan115/tidal-app"),
         )
 
         /** Name of the system method that turns on bit-perfect mode. */
