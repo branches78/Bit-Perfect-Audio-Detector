@@ -120,7 +120,7 @@ fun MainScreen(
     Scaffold(
         topBar = {
             // The refresh button lives beside the phone's name (DeviceHeader), so the title can be centered.
-            CenterAlignedTopAppBar(title = { Text("Bit-Perfect Audio Detector") })
+            CenterAlignedTopAppBar(title = { AppTitle() })
         },
     ) { padding ->
         if (report == null) {
