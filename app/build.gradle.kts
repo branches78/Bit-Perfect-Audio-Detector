@@ -52,6 +52,12 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.findByName("release")
         }
+        debug {
+            // Its own package and name, so it installs beside the release instead of replacing it.
+            // Its reports say "1.3.0-debug".
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

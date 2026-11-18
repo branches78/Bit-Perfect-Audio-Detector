@@ -24,7 +24,8 @@ class BitPerfectAppScanner(private val context: Context) {
     fun scan(): List<BitPerfectApp> = musicApps()
         // Apps the user disabled in Settings don't count (they can't play anything).
         .filter { it.enabled }
-        .filter { it.packageName != context.packageName && it.packageName !in EXCLUDED_PACKAGES }
+        // This app, in both its builds (the debug one, ".debug", can sit beside the release).
+        .filter { !it.packageName.startsWith(OWN_PACKAGE) && it.packageName !in EXCLUDED_PACKAGES }
         .filter { usesBitPerfectApi(it) }
         .map { BitPerfectApp(pm.getApplicationLabel(it).toString(), it.packageName) }
         .sortedBy { it.name.lowercase() }
@@ -116,6 +117,8 @@ class BitPerfectAppScanner(private val context: Context) {
         )
 
         /** Apps with their own USB driver that could contain the call without relying on it. */
+        private const val OWN_PACKAGE = "com.bitperfect.detector"
+
         private val EXCLUDED_PACKAGES = setOf(
             "com.extreamsd.usbaudioplayerpro",
         )

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The debug build's name on the launcher, so it can't be mistaken for the release beside it. -->
+    <string name="app_name" translatable="false">BP Detector Debug</string>
+</resources>
