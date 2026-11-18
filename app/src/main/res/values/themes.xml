@@ -1,3 +1,8 @@
 <resources>
-    <style name="Theme.BitPerfectDetector" parent="android:Theme.Material.NoActionBar" />
+    <!-- Transparent system bars, so the app draws behind them (MainActivity.drawEdgeToEdge).
+         Android 15 and later ignore these colors: there the bars are always transparent. -->
+    <style name="Theme.BitPerfectDetector" parent="android:Theme.Material.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
 </resources>

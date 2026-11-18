@@ -1,19 +1,21 @@
 package com.bitperfect.detector
 
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.media.AudioDeviceCallback
 import android.media.AudioDeviceInfo
 import android.media.AudioManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.bitperfect.detector.audio.AudioRuntimeProbe
 import com.bitperfect.detector.audio.BitPerfectApp
@@ -41,8 +43,11 @@ class MainActivity : ComponentActivity() {
     private var report by mutableStateOf<Report?>(null)
     private var sending by mutableStateOf(false)
 
-    /** Google Play's test devices and emulators don't offer to send a report. */
-    private var canReport = true
+    /** Google Play's test devices and emulators (by their Build values) don't offer to send a report. */
+    private var automated = false
+
+    /** Nor do emulators that pose as a real phone, which their audio gives away (TestDevice). */
+    private val canReport get() = TestDevice.canReport(automated, report?.runtime)
 
     /** This phone already sent [MAX_REPORTS] reports in the last 48 hours; "Send report" waits. */
     private var rateLimited by mutableStateOf(false)
@@ -70,12 +75,31 @@ class MainActivity : ComponentActivity() {
     private val mixerListener =
         AudioManager.OnPreferredMixerAttributesChangedListener { _, _, _ -> refresh() }
 
+    /**
+     * Draws the app behind the status and navigation bars, as androidx's enableEdgeToEdge() does,
+     * but without the Window.setStatusBarColor/setNavigationBarColor calls and the cutout mode that
+     * Android 15 deprecated (Google Play flags them). The bars are transparent through the theme.
+     */
+    private fun drawEdgeToEdge() {
+        // Android 15+ already draws behind the bars (targetSdk 36); Android 14 has to be asked.
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            WindowCompat.setDecorFitsSystemWindows(window, false)
+        }
+        // Dark icons on the light theme and light icons on the dark one (BitPerfectTheme follows the system).
+        val dark = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) ==
+            Configuration.UI_MODE_NIGHT_YES
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = !dark
+            isAppearanceLightNavigationBars = !dark
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        drawEdgeToEdge()
         audioManager = getSystemService(AudioManager::class.java)
         probe = AudioRuntimeProbe(this)
-        canReport = !TestDevice.isAutomated(this)
+        automated = TestDevice.isAutomated(this)
 
         setContent {
             BitPerfectTheme {
