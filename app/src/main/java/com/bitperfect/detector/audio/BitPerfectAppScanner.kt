@@ -103,6 +103,7 @@ class BitPerfectAppScanner(private val context: Context) {
             BitPerfectApp("BubbleUPnP DLNA/Chromecast", "com.bubblesoft.android.bubbleupnp"),
             BitPerfectApp("Music Player", "com.musicplayer.hifi", website = "https://github.com/branches78/Music-Player"),
             BitPerfectApp("OpenTune", "io.github.yyan115.opentune", website = "https://github.com/yyan115/tidal-app"),
+            BitPerfectApp("Namida", "com.msob7y.namida", website = "https://github.com/namidaco/namida"),
         )
 
         /** Name of the system method that turns on bit-perfect mode. */
