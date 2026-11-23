@@ -104,6 +104,7 @@ class BitPerfectAppScanner(private val context: Context) {
             BitPerfectApp("Music Player", "com.musicplayer.hifi", website = "https://github.com/branches78/Music-Player"),
             BitPerfectApp("OpenTune", "io.github.yyan115.opentune", website = "https://github.com/yyan115/tidal-app"),
             BitPerfectApp("Namida", "com.msob7y.namida", website = "https://github.com/namidaco/namida"),
+            BitPerfectApp("ArchiveTune", "moe.rukamori.archivetune", website = "https://github.com/rukamori/ArchiveTune"),
         )
 
         /** Name of the system method that turns on bit-perfect mode. */
