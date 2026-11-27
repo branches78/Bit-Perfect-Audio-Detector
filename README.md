@@ -33,7 +33,7 @@ It helps audiophiles to identify which phones have native bit-perfect support be
 Download the Bit-Perfect Audio Detector app from the [Releases](https://github.com/branches78/Bit-Perfect-Audio-Detector/releases)
 page of this repository and install it on your phone (Android 14 or later). Open it to see the
 results; for a definitive result, connect your USB DAC. Then you can tap "Send report" to add your
-phone to the [public table of phones](https://bit-perfect-detector-web.onrender.com).
+phone to the [public table of phones](https://bitperfectaudiodetector.com).
 
 ## Technical features
 
@@ -43,7 +43,7 @@ whether a USB DAC is connected, and which installed music apps use Android's nat
 mode.
 
 Users can send their results to the public table of phones on the
-[Bit-Perfect Audio Detector website](https://bit-perfect-detector-web.onrender.com). On phones without
+[Bit-Perfect Audio Detector website](https://bitperfectaudiodetector.com). On phones without
 bit-perfect, the app also offers a ready-to-post draft to ask the manufacturer for it in its forum.
 
 - `minSdk 34`: installs only on Android 14 or later (bit-perfect mode was added in Android 14).

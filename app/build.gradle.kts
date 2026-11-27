@@ -30,7 +30,7 @@ android {
         // Report server (github.com/branches78/Bit-Perfect-Audio-Detector-Server) and website with the
         // phone table. Change them if you deploy your own server or use your own domain.
         buildConfigField("String", "REPORT_SERVER_URL", "\"https://bit-perfect-detector-server.onrender.com\"")
-        buildConfigField("String", "WEBSITE_URL", "\"https://bit-perfect-detector-web.onrender.com\"")
+        buildConfigField("String", "WEBSITE_URL", "\"https://bitperfectaudiodetector.com\"")
     }
 
     signingConfigs {
